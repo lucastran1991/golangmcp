@@ -1,0 +1,15 @@
+---
+description: Security guidelines for Go backend
+globs:
+  - "backend/**/*.go"
+alwaysApply: true
+---
+
+- No secrets in code; use `os.Getenv` for configuration.
+- Sanitize/validate JSON; reject unknown fields where appropriate.
+- Use GORM for DB access; avoid raw queries unless necessary and reviewed.
+- Do not log secrets, tokens, or sensitive PII.
+- Apply timeouts and deadlines to servers and clients; avoid unbounded reads.
+- Use `crypto/rand` for tokens; no custom crypto.
+- Enforce authentication/authorization in middleware; least-privilege principle.
+

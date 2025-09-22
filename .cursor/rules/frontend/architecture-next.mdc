@@ -1,0 +1,13 @@
+---
+description: Architecture and layout for Next.js frontend
+globs:
+  - "frontend/**/*.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+
+- Use App Router in `frontend/app/` where possible; `pages/` only if required.
+- Organize shared code in `frontend/lib/`, `frontend/components/`, and `frontend/hooks/`.
+- Prefer Server Components by default; elevate to Client Components only for interactivity.
+- Co-locate route-specific components under the route directory.
+- Keep API calls in `frontend/lib/` or server actions; avoid scattering fetch logic.
+

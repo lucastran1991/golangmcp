@@ -1,0 +1,13 @@
+---
+description: Frontend security for Next.js
+globs:
+  - "frontend/**/*.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+
+- Never expose secrets; only use `NEXT_PUBLIC_` env vars for safe values.
+- Avoid `dangerouslySetInnerHTML`; if unavoidable, sanitize inputs.
+- Prefer HTTP-only cookies for auth; avoid storing tokens in `localStorage`.
+- Enforce Content Security Policy at the framework/proxy level.
+- Validate and sanitize all user-provided data rendered in the UI.
+

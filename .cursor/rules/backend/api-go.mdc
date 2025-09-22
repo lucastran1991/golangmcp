@@ -1,0 +1,15 @@
+---
+description: API guidelines for Go backend HTTP endpoints
+globs:
+  - "backend/**/*.go"
+alwaysApply: false
+---
+
+- All endpoints return JSON with proper status codes.
+- Include `/healthz` returning 200 and basic info.
+- Validate all HTTP input before processing (query, path, headers, body).
+- Use context-aware handlers and propagate `context.Context`.
+- Set `Content-Type: application/json; charset=utf-8`.
+- Consistent error shape: `{ "error": string, "code": string, "details"?: any }`.
+- Avoid leaking internal errors; map to safe messages, log details separately.
+

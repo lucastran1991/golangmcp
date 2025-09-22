@@ -1,0 +1,13 @@
+---
+description: Testing guidelines for Go backend
+globs:
+  - "backend/**/*_test.go"
+alwaysApply: true
+---
+
+- Write unit tests for every handler and service.
+- Prefer table-driven tests with subtests (t.Run).
+- Keep tests deterministic; avoid time and network flakiness.
+- For HTTP handlers, use `httptest` and check status codes and JSON bodies.
+- Aim for fast tests (< 2s total per package when possible).
+

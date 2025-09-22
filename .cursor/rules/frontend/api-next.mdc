@@ -1,0 +1,14 @@
+---
+description: API routes in Next.js (App Router and Pages Router)
+globs:
+  - "frontend/**/app/api/**/route.{ts,tsx}"
+  - "frontend/**/pages/api/**/*.{ts,js}"
+alwaysApply: false
+---
+
+- Return JSON with appropriate status codes using `Response` or `NextResponse`.
+- Validate input with a schema (e.g., Zod) before processing.
+- Avoid leaking internal errors; map to safe messages.
+- Set caching and revalidation headers explicitly when relevant.
+- Do not include server-only secrets in client bundles.
+

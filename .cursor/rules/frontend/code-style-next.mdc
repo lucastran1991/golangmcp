@@ -1,0 +1,15 @@
+---
+description: Code style for Next.js frontend (TypeScript, React)
+globs:
+  - "frontend/**/*.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+
+- Prefer TypeScript; enable `strict` in `tsconfig.json`.
+- Follow ESLint + Prettier; fix on save.
+- Use React Server Components by default in `app/`; add `"use client"` only when needed.
+- Co-locate components in `frontend/components/` and feature areas; prefer small, pure components.
+- Use named exports; avoid default exports except for Next.js pages/routes.
+- Avoid `any`; leverage discriminated unions and explicit types.
+- Prefer CSS Modules or Tailwind; avoid global CSS except in `app/globals.css`.
+

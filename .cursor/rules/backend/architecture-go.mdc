@@ -1,0 +1,15 @@
+---
+description: Architecture and layout for Go backend
+globs:
+  - "backend/**/*.go"
+alwaysApply: true
+---
+
+- Entrypoint in `/cmd/app/main.go`.
+- Handlers in `/internal/handlers/`.
+- Models in `/internal/models/`.
+- Services in `/internal/services/`.
+- Database code in `/internal/db/` using GORM.
+- Keep packages cohesive; avoid cyclic dependencies.
+- Prefer dependency injection for services.
+

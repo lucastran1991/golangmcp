@@ -1,0 +1,10 @@
+---
+description: Conventional Commits guidance for this repository
+alwaysApply: false
+---
+
+- Use Conventional Commits: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `build`, `ci`.
+- Format: `type(scope)!: short summary` (exclamation mark for breaking changes).
+- Body should explain motivation and context; reference issues when applicable.
+- Footer for breaking changes: `BREAKING CHANGE: ...`.
+

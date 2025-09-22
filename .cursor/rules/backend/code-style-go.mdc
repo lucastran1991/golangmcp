@@ -1,0 +1,16 @@
+---
+description: Effective Go style for backend
+globs:
+  - "backend/**/*.go"
+alwaysApply: true
+---
+
+- Follow Effective Go guidelines.
+- Run `gofmt` / `go fmt` for formatting.
+- Use GoDoc comments for all exported functions, types, and packages.
+- Keep functions focused; prefer small, composable functions.
+- Avoid stutter in names (e.g., `user.UserService` -> `service.User`).
+- Prefer explicit error handling; no naked panics in app code.
+- Avoid global state; pass dependencies explicitly via constructors.
+- For concurrency: use contexts, avoid goroutine leaks, and document ownership.
+

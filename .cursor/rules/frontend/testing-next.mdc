@@ -1,0 +1,13 @@
+---
+description: Testing for Next.js frontend
+globs:
+  - "frontend/**/*.{test,spec}.{ts,tsx,js,jsx}"
+alwaysApply: true
+---
+
+- Use Jest or Vitest with React Testing Library for unit tests.
+- Prefer tests that assert behavior, not implementation details.
+- Use Playwright for end-to-end tests in `frontend/e2e/`.
+- Mock network via MSW in unit tests; avoid real network calls.
+- Keep tests fast and deterministic.
+
