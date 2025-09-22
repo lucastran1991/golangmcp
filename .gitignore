@@ -1,0 +1,64 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# Cursor: track only rules
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+
+# Root env/logs
+.env
+.env.*
+!.env.example
+*.log
+logs/
+
+# Go backend
+backend/bin/
+backend/build/
+backend/dist/
+backend/tmp/
+backend/.cache/
+backend/coverage/
+backend/coverage.*.out
+backend/coverage.out
+backend/*.log
+backend/.env
+backend/.env.*
+# Go build/test artifacts
+backend/**/*.test
+backend/**/*.exe
+backend/**/*.dll
+backend/**/*.so
+backend/**/*.dylib
+
+# Next.js frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+frontend/.vercel/
+frontend/.cache/
+frontend/.eslintcache
+frontend/.stylelintcache
+frontend/coverage/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/.env
+frontend/.env.*
+
+# Misc JS/TS
+.nyc_output/
+**/*.tsbuildinfo
+
+
