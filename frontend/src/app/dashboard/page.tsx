@@ -19,15 +19,17 @@ import {
   LogOut,
   Upload,
   Trash2,
-  Loader2
+  Loader2,
+  CheckCircle
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const router = useRouter();
   const [securityStatus, setSecurityStatus] = useState<SecurityStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -55,15 +57,33 @@ export default function DashboardPage() {
   };
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Uploading avatar');
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
+
+    console.log('Selected file:', file.name, file.type, file.size);
 
     try {
       setLoading(true);
-      await profileAPI.uploadAvatar(file);
-      // Refresh user data or update state
-      window.location.reload();
+      setError(null);
+      console.log('Calling profileAPI.uploadAvatar...');
+      const response = await profileAPI.uploadAvatar(file);
+      console.log('Upload response:', response.data);
+      
+      // Update user data in context instead of reloading
+      if (response.data.user && updateUser) {
+        updateUser(response.data.user);
+      }
+      
+      setSuccess('Avatar uploaded successfully!');
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
+      console.error('Upload failed:', err);
       setError(err.response?.data?.error || 'Failed to upload avatar');
     } finally {
       setLoading(false);
@@ -73,10 +93,22 @@ export default function DashboardPage() {
   const handleDeleteAvatar = async () => {
     try {
       setLoading(true);
-      await profileAPI.deleteAvatar();
-      // Refresh user data or update state
-      window.location.reload();
+      setError(null);
+      console.log('Deleting avatar...');
+      const response = await profileAPI.deleteAvatar();
+      console.log('Delete response:', response.data);
+      
+      // Update user data in context instead of reloading
+      if (response.data.user && updateUser) {
+        updateUser(response.data.user);
+      }
+      
+      setSuccess('Avatar deleted successfully!');
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
+      console.error('Delete failed:', err);
       setError(err.response?.data?.error || 'Failed to delete avatar');
     } finally {
       setLoading(false);
@@ -112,6 +144,15 @@ export default function DashboardPage() {
           {error && (
             <Alert variant="destructive" className="mb-6">
               <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          {success && (
+            <Alert className="mb-6 border-green-200 bg-green-50 text-green-800">
+              <AlertDescription className="flex items-center">
+                <CheckCircle className="h-4 w-4 mr-2" />
+                {success}
+              </AlertDescription>
             </Alert>
           )}
 
@@ -161,7 +202,7 @@ export default function DashboardPage() {
                       onChange={handleAvatarUpload}
                       className="hidden"
                     />
-                    <Button size="sm" variant="outline" disabled={loading}>
+                    <Button size="sm" variant="outline" disabled={loading} className="z-50">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload Avatar
                     </Button>
@@ -241,15 +282,27 @@ export default function DashboardPage() {
                 <CardDescription>Manage your account</CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => router.push('/profile/edit')}
+                >
                   <UserIcon className="h-4 w-4 mr-2" />
                   Edit Profile
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => router.push('/profile/change-password')}
+                >
                   <Shield className="h-4 w-4 mr-2" />
                   Change Password
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => router.push('/profile/settings')}
+                >
                   <Settings className="h-4 w-4 mr-2" />
                   Account Settings
                 </Button>

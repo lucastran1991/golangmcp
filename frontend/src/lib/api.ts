@@ -4,19 +4,52 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 // Create axios instance
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL, // Remove /api prefix since backend doesn't use it
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Enable cookies for CSRF tokens
 });
 
-// Request interceptor to add auth token
+// CSRF token management
+let csrfToken: string | null = null;
+
+// Function to get CSRF token
+const getCSRFToken = async () => {
+  if (!csrfToken) {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/security/csrf-token`, {
+        withCredentials: true,
+      });
+      csrfToken = response.data.csrf_token;
+    } catch (error) {
+      console.warn('Failed to get CSRF token:', error);
+    }
+  }
+  return csrfToken;
+};
+
+// Request interceptor to add auth token and CSRF token
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    
+    // Add CSRF token for non-GET requests
+    if (config.method !== 'get' && config.method !== 'GET') {
+      const csrf = await getCSRFToken();
+      if (csrf) {
+        config.headers['X-CSRF-Token'] = csrf;
+      }
+    }
+    
+    // For multipart form data, let axios set the Content-Type with boundary
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+    
     return config;
   },
   (error) => {
@@ -52,13 +85,12 @@ export const profileAPI = {
   uploadAvatar: (file: File) => {
     const formData = new FormData();
     formData.append('avatar', file);
-    return api.post('/profile/avatar', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    return api.post('/profile/avatar', formData);
   },
   deleteAvatar: () => api.delete('/profile/avatar'),
+  getSessions: () => api.get('/sessions'),
+  invalidateSession: (sessionId: string) => api.delete(`/sessions/${sessionId}`),
+  invalidateAllSessions: () => api.delete('/sessions'),
 };
 
 // Security API
