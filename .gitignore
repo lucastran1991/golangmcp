@@ -39,6 +39,15 @@ backend/**/*.exe
 backend/**/*.dll
 backend/**/*.so
 backend/**/*.dylib
+# Go binary
+backend/main
+backend/golangmcp
+# Database files
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+# Upload directories
+backend/uploads/
 
 # Next.js frontend
 frontend/node_modules/
@@ -56,6 +65,10 @@ frontend/yarn-error.log*
 frontend/pnpm-debug.log*
 frontend/.env
 frontend/.env.*
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
 
 # Misc JS/TS
 .nyc_output/
@@ -84,4 +97,17 @@ node_modules/
 
 # Task files
 # tasks.json
-# tasks/ 
+# tasks/
+
+# Test files
+test_*.png
+test_*.jpg
+test_*.jpeg
+test_*.gif
+
+# MCP server files
+task-master-mcp-server.js
+test-mcp-server.js
+
+# Documentation
+COMPLETE_APPLICATION_SUMMARY.md 

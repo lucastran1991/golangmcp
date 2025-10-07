@@ -1,47 +1,175 @@
 <context>
-# Overview  
-[Provide a high-level overview of your product here. Explain what problem it solves, who it's for, and why it's valuable.]
+# Overview
+A full-stack user authentication and profile management system built with Golang backend and NextJS frontend. The system provides secure user authentication, profile management, and avatar upload capabilities.
 
-# Core Features  
-[List and describe the main features of your product. For each feature, include:
-- What it does
-- Why it's important
-- How it works at a high level]
+# Core Features
+1. User Authentication
+   - Secure login/logout functionality with JWT tokens
+   - User registration with validation
+   - Session management for persistent login
 
-# User Experience  
-[Describe the user journey and experience. Include:
-- User personas
-- Key user flows
-- UI/UX considerations]
+2. Profile Management
+   - User information viewing and editing
+   - Avatar image upload and management
+   - Role-based access control
+
+3. Secure API Integration
+   - Protected API endpoints
+   - JWT token validation
+   - Secure file upload handling
+
+# User Experience
+- User Personas:
+  * New users needing to register
+  * Existing users managing their profiles
+  * Users requiring secure authentication
+
+- Key User Flows:
+  * Registration → Email Verification → Profile Setup
+  * Login → Profile View/Edit → Logout
+  * Profile Access → Avatar Upload → Save Changes
+
+- UI/UX Considerations:
+  * Clean, modern interface using Shadcn components
+  * Responsive design for all devices
+  * Intuitive navigation and form handling
 </context>
 <PRD>
-# Technical Architecture  
-[Outline the technical implementation details:
-- System components
-- Data models
-- APIs and integrations
-- Infrastructure requirements]
+# Technical Architecture
 
-# Development Roadmap  
-[Break down the development process into phases:
-- MVP requirements
-- Future enhancements
-- Do not think about timelines whatsoever -- all that matters is scope and detailing exactly what needs to be build in each phase so it can later be cut up into tasks]
+## Backend (Golang)
+- Components:
+  * User Authentication Service
+  * Profile Management Service
+  * File Upload Service
+  * Middleware for JWT validation
+
+- Data Models:
+  ```go
+  type User struct {
+    ID        uint      `json:"id"`
+    Username  string    `json:"username"`
+    Password  string    `json:"-"`
+    Role      string    `json:"role"`
+    Avatar    string    `json:"avatar"`
+    CreatedAt time.Time `json:"created_at"`
+    UpdatedAt time.Time `json:"updated_at"`
+  }
+  ```
+
+- APIs:
+  * POST /api/auth/register
+  * POST /api/auth/login
+  * POST /api/auth/logout
+  * GET /api/users/profile
+  * PUT /api/users/profile
+  * POST /api/users/avatar
+
+## Frontend (NextJS)
+- Components:
+  * Authentication pages (login/register)
+  * Profile management dashboard
+  * Avatar upload component
+  * Protected route wrapper
+
+- State Management:
+  * JWT token storage
+  * User context
+  * Form state handling
+
+# Development Roadmap
+
+## Phase 1: Foundation
+- Backend:
+  * User model and database setup
+  * Basic authentication endpoints
+  * JWT implementation
+
+- Frontend:
+  * Project setup with NextJS and Shadcn
+  * Basic routing
+  * Authentication pages structure
+
+## Phase 2: Core Features
+- Backend:
+  * Profile management endpoints
+  * File upload handling
+  * Session management
+
+- Frontend:
+  * Login/Register forms
+  * Profile view/edit page
+  * Avatar upload component
+
+## Phase 3: Enhancement
+- Backend:
+  * Role-based authorization
+  * API rate limiting
+  * Enhanced security features
+
+- Frontend:
+  * UI/UX improvements
+  * Error handling
+  * Loading states
 
 # Logical Dependency Chain
-[Define the logical order of development:
-- Which features need to be built first (foundation)
-- Getting as quickly as possible to something usable/visible front end that works
-- Properly pacing and scoping each feature so it is atomic but can also be built upon and improved as development approaches]
+1. Backend Foundation
+   - Database setup
+   - User model implementation
+   - Basic API structure
 
-# Risks and Mitigations  
-[Identify potential risks and how they'll be addressed:
-- Technical challenges
-- Figuring out the MVP that we can build upon
-- Resource constraints]
+2. Frontend Foundation
+   - Project setup
+   - Routing configuration
+   - Basic components
 
-# Appendix  
-[Include any additional information:
-- Research findings
-- Technical specifications]
+3. Authentication Flow
+   - Backend authentication
+   - Frontend integration
+   - Session management
+
+4. Profile Management
+   - Backend profile endpoints
+   - Frontend profile pages
+   - Avatar upload functionality
+
+# Risks and Mitigations
+
+## Technical Challenges
+- Secure file upload handling
+  * Mitigation: Implement strict file validation and use secure storage
+- JWT token management
+  * Mitigation: Implement proper token refresh and validation
+
+## Security Considerations
+- Password security
+  * Mitigation: Use strong hashing and validation
+- API security
+  * Mitigation: Implement rate limiting and CORS
+
+## Resource Management
+- Image storage
+  * Mitigation: Implement file size limits and optimization
+- API performance
+  * Mitigation: Implement caching and pagination
+
+# Appendix
+
+## Technical Stack
+- Backend:
+  * Go 1.21+
+  * JWT-Go
+  * GORM
+  * Gin Web Framework
+
+- Frontend:
+  * NextJS 13+
+  * TypeScript
+  * Shadcn/UI
+  * Axios
+
+## Development Environment
+- Docker for containerization
+- Git for version control
+- Make for build automation
 </PRD>

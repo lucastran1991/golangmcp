@@ -1,0 +1,238 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": "11",
+        "title": "Setup Golang Project Structure and Dependencies",
+        "description": "Create a new Go project using the go mod init command, install required dependencies (e.g., Gin Web Framework, JWT-Go, GORM), and set up the project structure.",
+        "details": "Use the following commands to setup the project: `go mod init`, `go get gin-gonic/gin`, `go get github.com/dgrijalva/jwt-go`, `go get gorm.io/gorm`. Set up the project structure with a main package, models directory for database schema, and controllers directory for API endpoints.",
+        "testStrategy": "Unit tests using Go's built-in testing package to verify dependency installation and project structure setup.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-06T09:44:57.676Z"
+      },
+      {
+        "id": "12",
+        "title": "Implement User Model and Database Setup",
+        "description": "Create the User struct with fields for ID, username, password (hashed), role, avatar, created_at, and updated_at. Implement database setup using GORM to create a users table.",
+        "details": "Use the following code as a reference: `type User struct { ... }`. Use GORM's migration feature to create the users table in the database.\n<info added on 2025-10-07T02:15:22.198Z>\nCreate internal/models/user.go\nSetup GORM in internal/db/\nAuto-migrate users in app startup\nAdd unit tests for model and DB init\n</info added on 2025-10-07T02:15:22.198Z>",
+        "testStrategy": "Unit tests using Go's built-in testing package to verify user model and database setup functionality.",
+        "priority": "high",
+        "dependencies": [
+          "11"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define User Struct Fields",
+            "description": "Create the User struct with fields for ID, username, password (hashed), role, avatar, created_at, and updated_at.",
+            "dependencies": [],
+            "details": "Use the following code as a reference: `type User struct { ... }`.",
+            "status": "done",
+            "testStrategy": "",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-06T09:50:30.175Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement GORM Database Setup",
+            "description": "Use GORM's migration feature to create the users table in the database.",
+            "dependencies": [
+              "12.1"
+            ],
+            "details": "Use the following code as a reference: `func Migrate() { ... }`.",
+            "status": "done",
+            "testStrategy": "",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-07T07:45:24.077Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement User Model Methods",
+            "description": "Add methods to the User struct for common operations such as Get, Create, Update, and Delete.",
+            "dependencies": [
+              "12.2"
+            ],
+            "details": "Use the following code as a reference: `func (u *User) Save() { ... }`.",
+            "status": "done",
+            "testStrategy": "",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-07T08:13:47.405Z"
+          },
+          {
+            "id": 4,
+            "title": "Implement User Validation",
+            "description": "Add validation to ensure that user input is valid and consistent with the database schema.",
+            "dependencies": [
+              "12.3"
+            ],
+            "details": "Use the following code as a reference: `func ValidateUser(u *User) { ... }`.",
+            "status": "done",
+            "testStrategy": "",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-07T08:14:51.880Z"
+          },
+          {
+            "id": 5,
+            "title": "Test User Model and Database Setup",
+            "description": "Write unit tests to verify that the user model and database setup are functioning correctly.",
+            "dependencies": [
+              "12.4"
+            ],
+            "details": "Use Go's built-in testing package to write unit tests.",
+            "status": "done",
+            "testStrategy": "Unit tests",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-07T08:20:56.197Z"
+          }
+        ],
+        "updatedAt": "2025-10-07T08:20:56.197Z"
+      },
+      {
+        "id": "13",
+        "title": "Implement Basic Authentication Endpoints",
+        "description": "Create API endpoints for user registration, login, and logout using Gin Web Framework. Implement JWT token generation and validation.",
+        "details": "Use the following code as a reference: `func Register(c *gin.Context) { ... }`. Use JWT-Go to generate and validate tokens.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify authentication endpoint functionality.",
+        "priority": "high",
+        "dependencies": [
+          "12"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Register Endpoint",
+            "description": "Implement user registration API endpoint using Gin Web Framework.",
+            "dependencies": [],
+            "details": "Use the following code as a reference: `func Register(c *gin.Context) { ... }`. Use JWT-Go to generate and validate tokens.",
+            "status": "pending",
+            "testStrategy": "Integration tests using Go's built-in testing package",
+            "parentId": "undefined"
+          },
+          {
+            "id": 4,
+            "title": "Create Profile View Endpoint",
+            "description": "Implement user profile viewing API endpoint using Gin Web Framework.",
+            "dependencies": [],
+            "details": "Use the following code as a reference: `func GetProfile(c *gin.Context) { ... }`. Use GORM to interact with the database and implement role-based access control using Gin's built-in middleware.",
+            "status": "pending",
+            "testStrategy": "Integration tests using Go's built-in testing package",
+            "parentId": "undefined"
+          }
+        ],
+        "updatedAt": "2025-10-07T08:25:35.623Z"
+      },
+      {
+        "id": "14",
+        "title": "Implement Profile Management Endpoints",
+        "description": "Create API endpoints for user profile viewing and editing, including avatar upload. Implement role-based access control.",
+        "details": "Use the following code as a reference: `func GetProfile(c *gin.Context) { ... }`. Use GORM to interact with the database and implement role-based access control using Gin's built-in middleware.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify profile management endpoint functionality.",
+        "priority": "high",
+        "dependencies": [
+          "13"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:27:07.757Z"
+      },
+      {
+        "id": "15",
+        "title": "Implement Avatar Upload and Storage",
+        "description": "Create a service for avatar upload and storage. Implement file size limits and optimization.",
+        "details": "Use the following code as a reference: `func UploadAvatar(c *gin.Context) { ... }`. Use a library like Multer to handle file uploads and implement file size limits using Gin's built-in middleware.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify avatar upload and storage functionality.",
+        "priority": "medium",
+        "dependencies": [
+          "14"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:28:36.181Z"
+      },
+      {
+        "id": "16",
+        "title": "Implement Session Management",
+        "description": "Create a service for session management. Implement JWT token refresh and validation.",
+        "details": "Use the following code as a reference: `func RefreshToken(c *gin.Context) { ... }`. Use JWT-Go to generate and validate tokens.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify session management functionality.",
+        "priority": "medium",
+        "dependencies": [
+          "13"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:32:30.954Z"
+      },
+      {
+        "id": "17",
+        "title": "Implement Role-Based Authorization",
+        "description": "Create a middleware for role-based authorization. Implement access control using Gin's built-in middleware.",
+        "details": "Use the following code as a reference: `func Authorize(c *gin.Context) { ... }`. Use GORM to interact with the database and implement role-based access control using Gin's built-in middleware.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify role-based authorization functionality.",
+        "priority": "medium",
+        "dependencies": [
+          "14"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:34:31.769Z"
+      },
+      {
+        "id": "18",
+        "title": "Implement UI/UX Improvements",
+        "description": "Create a service for UI/UX improvements. Implement error handling and loading states.",
+        "details": "Use the following code as a reference: `func HandleError(c *gin.Context) { ... }`. Use NextJS's built-in features to implement error handling and loading states.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify UI/UX improvements functionality.",
+        "priority": "low",
+        "dependencies": [
+          "14"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:35:52.391Z"
+      },
+      {
+        "id": "19",
+        "title": "Implement Secure File Upload Handling",
+        "description": "Create a service for secure file upload handling. Implement strict file validation and use secure storage.",
+        "details": "Use the following code as a reference: `func UploadFile(c *gin.Context) { ... }`. Use a library like Multer to handle file uploads and implement strict file validation using Gin's built-in middleware.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify secure file upload handling functionality.",
+        "priority": "medium",
+        "dependencies": [
+          "15"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:38:21.592Z"
+      },
+      {
+        "id": "20",
+        "title": "Implement API Security Features",
+        "description": "Create a service for API security features. Implement rate limiting and CORS.",
+        "details": "Use the following code as a reference: `func RateLimit(c *gin.Context) { ... }`. Use Gin's built-in middleware to implement rate limiting and CORS.",
+        "testStrategy": "Integration tests using Go's built-in testing package to verify API security features functionality.",
+        "priority": "medium",
+        "dependencies": [
+          "16"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-07T08:43:31.087Z"
+      }
+    ],
+    "metadata": {
+      "version": "1.0.0",
+      "lastModified": "2025-10-07T08:43:31.088Z",
+      "taskCount": 10,
+      "completedCount": 10,
+      "tags": [
+        "master"
+      ]
+    }
+  }
+}

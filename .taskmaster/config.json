@@ -1,21 +1,21 @@
 {
   "models": {
     "main": {
-      "provider": "openai",
-      "modelId": "gpt-5",
-      "maxTokens": 100000,
+      "provider": "ollama",
+      "modelId": "llama3.1:8b",
+      "maxTokens": 4096,
       "temperature": 0.2
     },
     "research": {
-      "provider": "perplexity",
-      "modelId": "sonar-pro",
-      "maxTokens": 8700,
+      "provider": "ollama",
+      "modelId": "mistral:7b",
+      "maxTokens": 2048,
       "temperature": 0.1
     },
     "fallback": {
-      "provider": "anthropic",
-      "modelId": "claude-3-7-sonnet-20250219",
-      "maxTokens": 120000,
+      "provider": "ollama",
+      "modelId": "llama3.1:8b",
+      "maxTokens": 4096,
       "temperature": 0.2
     }
   },
@@ -31,7 +31,13 @@
     "responseLanguage": "English",
     "enableCodebaseAnalysis": true,
     "defaultTag": "master",
-    "azureOpenaiBaseURL": "https://your-endpoint.openai.azure.com/"
+    "azureOpenaiBaseURL": "https://your-endpoint.openai.azure.com/",
+    "userId": "1234567890"
   },
-  "claudeCode": {}
+  "claudeCode": {},
+  "grokCli": {
+    "timeout": 120000,
+    "workingDirectory": null,
+    "defaultModel": "grok-4-latest"
+  }
 }
