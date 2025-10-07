@@ -166,7 +166,7 @@ export default function AvatarUploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -175,31 +175,41 @@ export default function AvatarUploadPage() {
               variant="ghost"
               size="sm"
               onClick={() => router.back()}
-              className="mr-4"
+              className="mr-4 hover:bg-white/50 transition-all duration-200"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
-            <h1 className="text-3xl font-bold text-gray-900">Upload Avatar</h1>
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-3 shadow-lg">
+                <ImageIcon className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Upload Avatar
+              </h1>
+            </div>
           </div>
-          <p className="text-gray-600">
+          <p className="text-gray-600 ml-13">
             Upload a new profile picture or drag and drop an image below
           </p>
         </div>
 
         {/* Current Avatar */}
         {user?.avatar && (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="text-lg">Current Avatar</CardTitle>
+          <Card className="mb-6 bg-white/70 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <CardHeader className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-t-lg">
+              <CardTitle className="text-lg text-gray-800">Current Avatar</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center space-x-4">
-                <img 
-                  src={`http://localhost:8080${user.avatar}`} 
-                  alt="Current Avatar" 
-                  className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
-                />
+                <div className="relative">
+                  <img 
+                    src={`http://localhost:8080${user.avatar}`} 
+                    alt="Current Avatar" 
+                    className="w-20 h-20 rounded-full object-cover ring-4 ring-white/50 shadow-lg"
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
+                </div>
                 <div>
                   <p className="text-sm text-gray-600">Current profile picture</p>
                   <Button 
@@ -207,7 +217,7 @@ export default function AvatarUploadPage() {
                     size="sm"
                     onClick={handleDeleteAvatar}
                     disabled={loading}
-                    className="mt-2"
+                    className="mt-2 border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
                     Remove Current
@@ -219,9 +229,9 @@ export default function AvatarUploadPage() {
         )}
 
         {/* Upload Area */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Upload New Avatar</CardTitle>
+        <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+          <CardHeader className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-t-lg">
+            <CardTitle className="text-lg text-gray-800">Upload New Avatar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Error/Success Messages */}
@@ -242,10 +252,10 @@ export default function AvatarUploadPage() {
 
             {/* Drag and Drop Area */}
             <div
-              className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
                 dragActive
-                  ? 'border-blue-400 bg-blue-50'
-                  : 'border-gray-300 hover:border-gray-400'
+                  ? 'border-blue-400 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg scale-105'
+                  : 'border-gray-300 hover:border-blue-400 hover:bg-gradient-to-br hover:from-gray-50 hover:to-blue-50 hover:shadow-md'
               }`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -262,24 +272,29 @@ export default function AvatarUploadPage() {
               
               {preview ? (
                 <div className="space-y-4">
-                  <img
-                    src={preview}
-                    alt="Preview"
-                    className="mx-auto w-32 h-32 rounded-full object-cover border-2 border-gray-200"
-                  />
+                  <div className="relative mx-auto w-32 h-32">
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="w-32 h-32 rounded-full object-cover ring-4 ring-white/50 shadow-xl"
+                    />
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center">
+                      <CheckCircle className="h-4 w-4 text-white" />
+                    </div>
+                  </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">
                       {selectedFile?.name}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {(selectedFile?.size || 0 / 1024 / 1024).toFixed(2)} MB
+                      {((selectedFile?.size || 0) / 1024 / 1024).toFixed(2)} MB
                     </p>
                   </div>
                   <div className="flex justify-center space-x-2">
                     <Button
                       onClick={handleUpload}
                       disabled={loading}
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
                     >
                       {loading ? (
                         <>
@@ -297,6 +312,7 @@ export default function AvatarUploadPage() {
                       variant="outline"
                       onClick={clearSelection}
                       disabled={loading}
+                      className="border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 shadow-sm hover:shadow-md transition-all duration-200"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancel
@@ -305,8 +321,8 @@ export default function AvatarUploadPage() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
-                    <ImageIcon className="h-8 w-8 text-gray-400" />
+                  <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center shadow-lg">
+                    <ImageIcon className="h-8 w-8 text-blue-500" />
                   </div>
                   <div>
                     <p className="text-lg font-medium text-gray-900">
@@ -320,6 +336,7 @@ export default function AvatarUploadPage() {
                     onClick={openFileDialog}
                     variant="outline"
                     disabled={loading}
+                    className="border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     <Upload className="h-4 w-4 mr-2" />
                     Choose File
