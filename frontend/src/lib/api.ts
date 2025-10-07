@@ -80,14 +80,46 @@ export const authAPI = {
 // Profile API
 export const profileAPI = {
   getProfile: () => api.get('/profile'),
-  updateProfile: (data: UpdateProfileRequest) => api.put('/profile', data),
-  changePassword: (data: ChangePasswordRequest) => api.post('/profile/change-password', data),
-  uploadAvatar: (file: File) => {
+  updateProfile: async (data: UpdateProfileRequest) => {
+    const token = await getCSRFToken();
+    return api.put('/profile', data, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  changePassword: async (data: ChangePasswordRequest) => {
+    const token = await getCSRFToken();
+    return api.post('/profile/change-password', data, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  uploadAvatar: async (file: File) => {
     const formData = new FormData();
     formData.append('avatar', file);
-    return api.post('/profile/avatar', formData);
+    
+    // Get CSRF token before making the request
+    const token = await getCSRFToken();
+    
+    return api.post('/profile/avatar', formData, {
+      headers: {
+        'X-CSRF-Token': token || '',
+        // Don't set Content-Type for FormData, let browser set it with boundary
+      },
+    });
   },
-  deleteAvatar: () => api.delete('/profile/avatar'),
+  deleteAvatar: async () => {
+    // Get CSRF token before making the request
+    const token = await getCSRFToken();
+    
+    return api.delete('/profile/avatar', {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
   getSessions: () => api.get('/sessions'),
   invalidateSession: (sessionId: string) => api.delete(`/sessions/${sessionId}`),
   invalidateAllSessions: () => api.delete('/sessions'),

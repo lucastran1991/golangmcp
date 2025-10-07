@@ -212,6 +212,38 @@ export default function AccountSettingsPage() {
           </Alert>
         )}
 
+        {/* Quick Navigation */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                onClick={() => router.push('/profile/edit')}
+                className="flex items-center space-x-2"
+              >
+                <Settings className="h-4 w-4" />
+                <span>Edit Profile</span>
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => router.push('/profile/change-password')}
+                className="flex items-center space-x-2"
+              >
+                <Shield className="h-4 w-4" />
+                <span>Change Password</span>
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => router.push('/profile/avatar')}
+                className="flex items-center space-x-2"
+              >
+                <Globe className="h-4 w-4" />
+                <span>Upload Avatar</span>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Notification Settings */}
           <Card>

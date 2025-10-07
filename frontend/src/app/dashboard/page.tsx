@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { user, logout, updateUser } = useAuth();
+  const { user, logout } = useAuth();
   const router = useRouter();
   const [securityStatus, setSecurityStatus] = useState<SecurityStatus | null>(null);
   const [loading, setLoading] = useState(true);
@@ -56,39 +56,6 @@ export default function DashboardPage() {
     router.push('/login');
   };
 
-  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Uploading avatar');
-    const file = event.target.files?.[0];
-    if (!file) {
-      console.log('No file selected');
-      return;
-    }
-
-    console.log('Selected file:', file.name, file.type, file.size);
-
-    try {
-      setLoading(true);
-      setError(null);
-      console.log('Calling profileAPI.uploadAvatar...');
-      const response = await profileAPI.uploadAvatar(file);
-      console.log('Upload response:', response.data);
-      
-      // Update user data in context instead of reloading
-      if (response.data.user && updateUser) {
-        updateUser(response.data.user);
-      }
-      
-      setSuccess('Avatar uploaded successfully!');
-      
-      // Clear success message after 3 seconds
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (err: any) {
-      console.error('Upload failed:', err);
-      setError(err.response?.data?.error || 'Failed to upload avatar');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDeleteAvatar = async () => {
     try {
@@ -98,15 +65,13 @@ export default function DashboardPage() {
       const response = await profileAPI.deleteAvatar();
       console.log('Delete response:', response.data);
       
-      // Update user data in context instead of reloading
-      if (response.data.user && updateUser) {
-        updateUser(response.data.user);
-      }
-      
       setSuccess('Avatar deleted successfully!');
       
       // Clear success message after 3 seconds
       setTimeout(() => setSuccess(null), 3000);
+      
+      // Reload the page to update the UI
+      window.location.reload();
     } catch (err: any) {
       console.error('Delete failed:', err);
       setError(err.response?.data?.error || 'Failed to delete avatar');
@@ -195,18 +160,15 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex space-x-2">
-                  <label className="cursor-pointer">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarUpload}
-                      className="hidden"
-                    />
-                    <Button size="sm" variant="outline" disabled={loading} className="z-50">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload Avatar
-                    </Button>
-                  </label>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={() => router.push('/profile/avatar')}
+                    className="z-50"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload Avatar
+                  </Button>
                   {user.avatar && (
                     <Button 
                       size="sm" 
