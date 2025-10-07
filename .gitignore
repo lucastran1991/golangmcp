@@ -110,4 +110,9 @@ task-master-mcp-server.js
 test-mcp-server.js
 
 # Documentation
-COMPLETE_APPLICATION_SUMMARY.md 
+COMPLETE_APPLICATION_SUMMARY.md
+SCRIPTS_README.md
+
+# Scripts and logs
+logs/
+*.pid 
