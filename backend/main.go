@@ -12,6 +12,7 @@ import (
 	"golangmcp/internal/models"
 	"golangmcp/internal/security"
 	"golangmcp/internal/session"
+	"golangmcp/internal/websocket"
 )
 
 var jwtKey = []byte("my_secret_key")
@@ -71,6 +72,9 @@ func main() {
 	// Start session cleanup
 	session.StartSessionCleanup()
 	log.Println("Session cleanup started")
+
+	// Initialize WebSocket hub
+	websocket.InitializeWebSocket()
 
 	// Initialize Gin router
 	r := gin.Default()
@@ -160,6 +164,27 @@ func main() {
 	// Admin security endpoints
 	r.PUT("/admin/security/config", handlers.AuthMiddleware(), handlers.RequirePermission("admin.security"), handlers.UpdateSecurityConfigHandler)
 	r.GET("/admin/security/logs", handlers.AuthMiddleware(), handlers.RequirePermission("admin.security"), handlers.GetSecurityLogsHandler)
+
+	// System metrics endpoints
+	r.GET("/api/metrics/system", handlers.AuthMiddleware(), handlers.GetSystemMetricsHandler)
+	r.GET("/api/metrics/cpu", handlers.AuthMiddleware(), handlers.GetCPUMetricsHandler)
+	r.GET("/api/metrics/memory", handlers.AuthMiddleware(), handlers.GetMemoryMetricsHandler)
+	r.GET("/api/metrics/disk", handlers.AuthMiddleware(), handlers.GetDiskMetricsHandler)
+	r.GET("/api/metrics/network", handlers.AuthMiddleware(), handlers.GetNetworkMetricsHandler)
+	r.GET("/api/metrics/history", handlers.AuthMiddleware(), handlers.GetMetricsHistoryHandler)
+	r.GET("/api/metrics/config", handlers.AuthMiddleware(), handlers.GetMetricsConfigHandler)
+
+	// WebSocket endpoint for real-time metrics
+	r.GET("/ws/metrics", handlers.AuthMiddleware(), websocket.HandleWebSocket)
+
+	// File management endpoints
+	r.GET("/api/files", handlers.AuthMiddleware(), handlers.GetFilesHandler)
+	r.GET("/api/files/:id", handlers.AuthMiddleware(), handlers.GetFileHandler)
+	r.POST("/api/files/upload", handlers.AuthMiddleware(), handlers.UploadFileHandler)
+	r.GET("/api/files/:id/download", handlers.AuthMiddleware(), handlers.DownloadFileHandler)
+	r.DELETE("/api/files/:id", handlers.AuthMiddleware(), handlers.DeleteFileHandler)
+	r.GET("/api/files/stats", handlers.AuthMiddleware(), handlers.GetFileStatsHandler)
+	r.GET("/api/files/:id/logs", handlers.AuthMiddleware(), handlers.GetFileAccessLogsHandler)
 
 	// Start server
 	r.Run(":8080")

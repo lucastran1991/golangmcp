@@ -1,0 +1,453 @@
+{
+  "tasks": [
+    {
+      "id": "f18c30f6-5501-4d12-b6ea-e2b5fc05edc3",
+      "name": "Create Responsive Sidebar Navigation Component",
+      "description": "Design and implement a responsive sidebar navigation component with three main sections: Dashboard, Deployment, and File Manager. The component should integrate with existing AuthContext and routing system.",
+      "notes": "Must maintain design consistency with existing gradient themes and hover effects. Should work seamlessly with ProtectedRoute wrapper.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T08:01:28.739Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/components/layout/Sidebar.tsx",
+          "type": "CREATE",
+          "description": "Main sidebar navigation component"
+        },
+        {
+          "path": "frontend/src/contexts/AuthContext.tsx",
+          "type": "REFERENCE",
+          "description": "Authentication context for user state"
+        },
+        {
+          "path": "frontend/src/components/ProtectedRoute.tsx",
+          "type": "REFERENCE",
+          "description": "Route protection wrapper"
+        }
+      ],
+      "implementationGuide": "Create /components/layout/Sidebar.tsx with responsive design using Tailwind CSS. Implement collapsible sidebar for mobile, active state management using Next.js usePathname, and consistent styling with existing glass-morphism theme. Include proper TypeScript interfaces and accessibility features.",
+      "verificationCriteria": "Sidebar renders correctly on desktop and mobile, active states work properly, navigation links function correctly, design matches existing theme, accessibility features work (keyboard navigation, screen readers)",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns.",
+      "summary": "Responsive sidebar navigation component has been successfully implemented with comprehensive features including mobile responsiveness, collapsible design, user info display, navigation items with icons and descriptions, active state highlighting, and integration with AuthContext and routing system. The component includes proper TypeScript interfaces, accessibility features, and maintains design consistency with the existing glass-morphism theme.",
+      "completedAt": "2025-10-08T08:01:28.738Z"
+    },
+    {
+      "id": "a23a45d8-240f-47f4-9f80-c00bd63a6ed1",
+      "name": "Implement Sidebar State Management and Context",
+      "description": "Create a navigation context to manage sidebar state (open/closed, active section) and provide state management across the application.",
+      "notes": "Should integrate with existing AuthContext and session management. Consider user preferences for sidebar state persistence.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "f18c30f6-5501-4d12-b6ea-e2b5fc05edc3"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/contexts/NavigationContext.tsx",
+          "type": "CREATE",
+          "description": "Navigation state management context"
+        },
+        {
+          "path": "frontend/src/app/layout.tsx",
+          "type": "TO_MODIFY",
+          "description": "Add NavigationProvider to root layout"
+        }
+      ],
+      "implementationGuide": "Create /contexts/NavigationContext.tsx with useState for sidebar state, active section tracking, and mobile responsiveness. Implement context provider with toggle functions and state persistence using localStorage for user preferences.",
+      "verificationCriteria": "Context provides sidebar state management, toggle functions work correctly, state persists across page reloads, mobile responsiveness maintained",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "5baeaa59-e6a2-4244-a0bb-bef28b207133",
+      "name": "Create Navigation Menu Items and Icons",
+      "description": "Design and implement navigation menu items with appropriate icons, labels, and hover effects for Dashboard, Deployment, and File Manager sections.",
+      "notes": "Use existing icon library (Lucide React) and maintain design consistency with current button and card components.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "f18c30f6-5501-4d12-b6ea-e2b5fc05edc3"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/components/layout/NavigationItem.tsx",
+          "type": "CREATE",
+          "description": "Individual navigation menu item component"
+        },
+        {
+          "path": "frontend/src/components/layout/Sidebar.tsx",
+          "type": "TO_MODIFY",
+          "description": "Integrate navigation items into sidebar"
+        }
+      ],
+      "implementationGuide": "Create menu item components with Lucide React icons, implement hover effects matching existing design system, add proper spacing and typography. Include submenu support for future expansion and maintain consistent styling with existing components.",
+      "verificationCriteria": "Menu items display correctly with proper icons, hover effects work smoothly, typography is consistent, accessibility features implemented",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "eb8849df-165b-4020-be3d-8c666812bd4e",
+      "name": "Integrate Sidebar with Existing Layout",
+      "description": "Integrate the sidebar navigation with the existing application layout, ensuring proper responsive behavior and maintaining current page functionality.",
+      "notes": "Must not break existing functionality. Dashboard and other pages should work seamlessly with new sidebar layout.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "f18c30f6-5501-4d12-b6ea-e2b5fc05edc3"
+        },
+        {
+          "taskId": "a23a45d8-240f-47f4-9f80-c00bd63a6ed1"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/app/layout.tsx",
+          "type": "TO_MODIFY",
+          "description": "Root layout with sidebar integration"
+        },
+        {
+          "path": "frontend/src/app/dashboard/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "Update dashboard to work with sidebar layout"
+        },
+        {
+          "path": "frontend/src/components/ProtectedRoute.tsx",
+          "type": "REFERENCE",
+          "description": "Ensure compatibility with route protection"
+        }
+      ],
+      "implementationGuide": "Modify /app/layout.tsx to include NavigationProvider and Sidebar component. Update existing pages to work with sidebar layout. Ensure ProtectedRoute integration and maintain existing authentication flow.",
+      "verificationCriteria": "Sidebar integrates properly with existing layout, all existing pages work correctly, responsive behavior maintained, no functionality broken",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "fd0fc062-bfbc-4c54-915d-640ffb1ea14f",
+      "name": "Create System Metrics Backend API Endpoints",
+      "description": "Implement backend API endpoints for system metrics including CPU usage, memory usage, disk space, and network statistics.",
+      "notes": "Follow existing backend patterns with proper middleware integration, authentication, and error handling. Consider performance impact of frequent metric collection.",
+      "status": "pending",
+      "dependencies": [],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "backend/internal/handlers/metrics.go",
+          "type": "CREATE",
+          "description": "System metrics API handlers"
+        },
+        {
+          "path": "backend/main.go",
+          "type": "TO_MODIFY",
+          "description": "Add metrics routes to main router"
+        },
+        {
+          "path": "backend/internal/security/security.go",
+          "type": "REFERENCE",
+          "description": "Apply security middleware to metrics endpoints"
+        }
+      ],
+      "implementationGuide": "Create /internal/handlers/metrics.go with endpoints for system metrics. Use Go system packages to gather real-time metrics. Implement proper error handling and rate limiting. Add endpoints: GET /api/metrics/system, GET /api/metrics/cpu, GET /api/metrics/memory, GET /api/metrics/disk.",
+      "verificationCriteria": "API endpoints return accurate system metrics, proper authentication required, error handling works correctly, performance impact is minimal",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "6392a15e-cd50-4b62-8622-d3bdc2d7e6ee",
+      "name": "Implement WebSocket Support for Real-time Metrics",
+      "description": "Add WebSocket support to the backend for real-time system metrics streaming to enable live dashboard updates.",
+      "notes": "Consider connection limits and memory usage. Implement proper cleanup for disconnected clients.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "fd0fc062-bfbc-4c54-915d-640ffb1ea14f"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "backend/internal/websocket/metrics.go",
+          "type": "CREATE",
+          "description": "WebSocket metrics streaming implementation"
+        },
+        {
+          "path": "backend/main.go",
+          "type": "TO_MODIFY",
+          "description": "Add WebSocket routes and handlers"
+        },
+        {
+          "path": "backend/go.mod",
+          "type": "TO_MODIFY",
+          "description": "Add WebSocket dependency"
+        }
+      ],
+      "implementationGuide": "Implement WebSocket server in Go using gorilla/websocket or similar. Create /internal/websocket/metrics.go for real-time metric broadcasting. Add connection management, client registration, and metric streaming functionality. Integrate with existing Gin router.",
+      "verificationCriteria": "WebSocket connections work correctly, real-time metrics stream properly, connection management handles disconnections, performance is acceptable",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "e68f5070-8ac2-4656-9954-73f87c138faa",
+      "name": "Create Frontend Metrics API Client",
+      "description": "Extend the existing API client to support system metrics endpoints and WebSocket connections for real-time data.",
+      "notes": "Follow existing API client patterns with CSRF protection and error handling. Ensure WebSocket reconnection logic.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "fd0fc062-bfbc-4c54-915d-640ffb1ea14f"
+        },
+        {
+          "taskId": "6392a15e-cd50-4b62-8622-d3bdc2d7e6ee"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/lib/api.ts",
+          "type": "TO_MODIFY",
+          "description": "Add metrics API functions"
+        },
+        {
+          "path": "frontend/src/lib/metrics.ts",
+          "type": "CREATE",
+          "description": "Metrics data types and WebSocket client"
+        },
+        {
+          "path": "frontend/src/lib/session.ts",
+          "type": "REFERENCE",
+          "description": "Follow existing session management patterns"
+        }
+      ],
+      "implementationGuide": "Add metrics API functions to /lib/api.ts following existing patterns. Create WebSocket client for real-time metrics. Implement proper error handling and connection management. Add TypeScript interfaces for metrics data structures.",
+      "verificationCriteria": "API client functions work correctly, WebSocket connections establish properly, error handling works, TypeScript types are accurate",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "d7743993-1515-45b2-b1ec-870ec344772f",
+      "name": "Implement Chart Visualization Components",
+      "description": "Create reusable chart components for displaying system metrics using a lightweight charting library like Recharts or Chart.js.",
+      "notes": "Choose lightweight library to maintain performance. Ensure charts are responsive and accessible.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "e68f5070-8ac2-4656-9954-73f87c138faa"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/components/charts/CPUMetricChart.tsx",
+          "type": "CREATE",
+          "description": "CPU usage chart component"
+        },
+        {
+          "path": "frontend/src/components/charts/MemoryMetricChart.tsx",
+          "type": "CREATE",
+          "description": "Memory usage chart component"
+        },
+        {
+          "path": "frontend/src/components/charts/DiskMetricChart.tsx",
+          "type": "CREATE",
+          "description": "Disk space chart component"
+        },
+        {
+          "path": "frontend/src/components/charts/NetworkMetricChart.tsx",
+          "type": "CREATE",
+          "description": "Network metrics chart component"
+        },
+        {
+          "path": "frontend/package.json",
+          "type": "TO_MODIFY",
+          "description": "Add charting library dependency"
+        }
+      ],
+      "implementationGuide": "Install charting library (Recharts recommended for React). Create /components/charts/ directory with components for CPU usage, memory usage, disk space, and network charts. Implement responsive design and consistent styling with existing theme.",
+      "verificationCriteria": "Charts render correctly with real data, responsive design works, animations are smooth, accessibility features implemented",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "0e7eb8de-cf4a-4469-8a03-c5d89dd0ee7f",
+      "name": "Create System Metrics Dashboard Page",
+      "description": "Build the main system metrics dashboard page with real-time charts, system information, and responsive layout.",
+      "notes": "Maintain design consistency with existing dashboard page. Include proper loading states and error handling.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "d7743993-1515-45b2-b1ec-870ec344772f"
+        },
+        {
+          "taskId": "eb8849df-165b-4020-be3d-8c666812bd4e"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/app/deployment/page.tsx",
+          "type": "CREATE",
+          "description": "System metrics dashboard page"
+        },
+        {
+          "path": "frontend/src/components/charts/",
+          "type": "REFERENCE",
+          "description": "Chart components for metrics display"
+        },
+        {
+          "path": "frontend/src/lib/metrics.ts",
+          "type": "REFERENCE",
+          "description": "Metrics API client and WebSocket"
+        }
+      ],
+      "implementationGuide": "Create /app/deployment/page.tsx with comprehensive metrics dashboard. Implement real-time updates using WebSocket, display multiple chart types, add system information cards, and ensure responsive design. Use existing design patterns and components.",
+      "verificationCriteria": "Dashboard displays real-time metrics correctly, charts update smoothly, responsive design works, loading states and error handling function properly",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "b20028cc-f20d-45ae-8f5d-e070b0f891e8",
+      "name": "Extend Backend File Management API",
+      "description": "Create comprehensive file management API endpoints for file listing, metadata retrieval, and file operations (upload, download, delete) supporting TXT, XLSX, and CSV formats.",
+      "notes": "Leverage existing secure upload infrastructure. Ensure proper file type validation and security measures.",
+      "status": "pending",
+      "dependencies": [],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "backend/internal/handlers/file_manager.go",
+          "type": "CREATE",
+          "description": "File management API handlers"
+        },
+        {
+          "path": "backend/internal/models/file.go",
+          "type": "CREATE",
+          "description": "File metadata model"
+        },
+        {
+          "path": "backend/main.go",
+          "type": "TO_MODIFY",
+          "description": "Add file management routes"
+        },
+        {
+          "path": "backend/internal/handlers/secure_upload.go",
+          "type": "REFERENCE",
+          "description": "Leverage existing secure upload system"
+        }
+      ],
+      "implementationGuide": "Extend existing secure upload system to support file management operations. Add endpoints: GET /api/files (list files), GET /api/files/:id (file details), DELETE /api/files/:id (delete file), GET /api/files/:id/download (download file). Implement proper file type validation and metadata storage.",
+      "verificationCriteria": "File management API endpoints work correctly, file type validation functions properly, security measures are maintained, metadata storage works",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "8b652238-8c39-41a6-ba93-4d627fb834b4",
+      "name": "Create File Upload Component with Drag-and-Drop",
+      "description": "Build a comprehensive file upload component with drag-and-drop functionality, file type validation, and progress indicators for TXT, XLSX, and CSV files.",
+      "notes": "Follow existing upload patterns from avatar upload. Ensure proper file type validation and user feedback.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "b20028cc-f20d-45ae-8f5d-e070b0f891e8"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/components/files/FileUpload.tsx",
+          "type": "CREATE",
+          "description": "File upload component with drag-and-drop"
+        },
+        {
+          "path": "frontend/src/lib/api.ts",
+          "type": "TO_MODIFY",
+          "description": "Add file management API functions"
+        },
+        {
+          "path": "frontend/package.json",
+          "type": "TO_MODIFY",
+          "description": "Add react-dropzone dependency"
+        }
+      ],
+      "implementationGuide": "Create /components/files/FileUpload.tsx with drag-and-drop support using react-dropzone. Implement file type validation, size limits, progress indicators, and error handling. Use existing design patterns and ensure accessibility.",
+      "verificationCriteria": "Drag-and-drop functionality works correctly, file type validation prevents invalid uploads, progress indicators display properly, error handling works",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "29454647-e978-4b0b-825f-1a8e009b2a5f",
+      "name": "Implement File List and Management UI",
+      "description": "Create file listing component with search, filtering, sorting, and file management operations (view, download, delete) with proper user feedback.",
+      "notes": "Use existing table patterns from dashboard users table. Ensure proper user feedback for all operations.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "8b652238-8c39-41a6-ba93-4d627fb834b4"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/components/files/FileList.tsx",
+          "type": "CREATE",
+          "description": "File listing and management component"
+        },
+        {
+          "path": "frontend/src/components/files/FileItem.tsx",
+          "type": "CREATE",
+          "description": "Individual file item component"
+        },
+        {
+          "path": "frontend/src/components/ui/table.tsx",
+          "type": "REFERENCE",
+          "description": "Use existing table components"
+        }
+      ],
+      "implementationGuide": "Create /components/files/FileList.tsx with table-based file listing, search functionality, file type filtering, and action buttons. Implement proper loading states, error handling, and confirmation dialogs for destructive actions.",
+      "verificationCriteria": "File list displays correctly with all metadata, search and filtering work properly, file operations function correctly, user feedback is clear",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    },
+    {
+      "id": "3e3f28e7-30aa-4886-9f4f-1d99432b3dcd",
+      "name": "Create File Manager Main Page",
+      "description": "Build the main file manager page integrating upload, file listing, and management components with responsive layout and proper navigation.",
+      "notes": "Maintain design consistency with existing pages. Ensure proper integration with sidebar navigation.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "29454647-e978-4b0b-825f-1a8e009b2a5f"
+        },
+        {
+          "taskId": "eb8849df-165b-4020-be3d-8c666812bd4e"
+        }
+      ],
+      "createdAt": "2025-10-08T07:25:58.957Z",
+      "updatedAt": "2025-10-08T07:25:58.957Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/src/app/files/page.tsx",
+          "type": "CREATE",
+          "description": "Main file manager page"
+        },
+        {
+          "path": "frontend/src/components/files/",
+          "type": "REFERENCE",
+          "description": "File management components"
+        },
+        {
+          "path": "frontend/src/lib/api.ts",
+          "type": "REFERENCE",
+          "description": "File management API client"
+        }
+      ],
+      "implementationGuide": "Create /app/files/page.tsx integrating all file management components. Implement proper layout with upload area and file list, add breadcrumb navigation, and ensure responsive design. Use existing design patterns and maintain consistency.",
+      "verificationCriteria": "File manager page integrates all components correctly, responsive design works, navigation functions properly, all file operations work as expected",
+      "analysisResult": "Based on comprehensive analysis of the existing codebase, the remaining tasks (21, 22, 23) need to be broken down into detailed subtasks that integrate seamlessly with the current Next.js + Go architecture, maintain design consistency with the existing gradient/glass-morphism theme, and leverage the established Shadcn/UI component library and API patterns."
+    }
+  ]
+}

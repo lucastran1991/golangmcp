@@ -223,13 +223,53 @@
         "status": "done",
         "subtasks": [],
         "updatedAt": "2025-10-07T08:43:31.087Z"
+      },
+      {
+        "id": "21",
+        "title": "Implement Left Menu Navigation",
+        "description": "Create a left menu navigation with three main sections: Dashboard, Deployment, and File Manager.",
+        "details": "Implement a responsive left menu using NextJS components. Ensure proper routing and active state handling for each section. Use a UI library like Material-UI or Tailwind CSS for consistent styling.",
+        "testStrategy": "Unit tests for component rendering and integration tests for navigation functionality.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [],
+        "updatedAt": "2025-10-08T10:00:00.000Z"
+      },
+      {
+        "id": "22",
+        "title": "Implement System Metrics Dashboard",
+        "description": "Create a deployment monitoring page displaying real-time system metrics including CPU and memory usage.",
+        "details": "Use a monitoring library to fetch system metrics. Implement real-time updates using WebSocket connections. Display metrics using interactive charts and graphs. Consider using libraries like Chart.js or D3.js for visualization.",
+        "testStrategy": "Integration tests for metric collection and display functionality. Unit tests for individual metric components.",
+        "priority": "medium",
+        "dependencies": [
+          "21"
+        ],
+        "status": "pending",
+        "subtasks": [],
+        "updatedAt": "2025-10-08T10:00:00.000Z"
+      },
+      {
+        "id": "23",
+        "title": "Implement File Manager with Upload Functionality",
+        "description": "Create a file manager page with upload capabilities supporting TXT, XLSX, and CSV file formats.",
+        "details": "Implement file upload functionality with strict validation for allowed file types (TXT, XLSX, CSV). Create an independent storage system for uploaded files. Add file listing and management features. Implement proper error handling and progress indicators.",
+        "testStrategy": "Integration tests for file upload process, validation tests for file types, unit tests for component rendering.",
+        "priority": "medium",
+        "dependencies": [
+          "21"
+        ],
+        "status": "pending",
+        "subtasks": [],
+        "updatedAt": "2025-10-08T10:00:00.000Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-10-07T08:43:31.088Z",
-      "taskCount": 10,
-      "completedCount": 10,
+      "lastModified": "2025-10-08T10:00:00.000Z",
+      "taskCount": 23,
+      "completedCount": 19,
       "tags": [
         "master"
       ]
