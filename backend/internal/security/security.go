@@ -52,7 +52,7 @@ type CSRFProtection struct {
 var (
 	// Default security configuration
 	DefaultSecurityConfig = SecurityConfig{
-		RateLimitPerMinute: 60,
+		RateLimitPerMinute: 120,
 		MaxRequestSize:     10 * 1024 * 1024, // 10MB
 		EnableCORS:         true,
 		EnableCSRF:         true,

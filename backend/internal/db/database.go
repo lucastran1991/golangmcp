@@ -38,6 +38,9 @@ func InitDatabase(dsn string) error {
 func AutoMigrate() error {
 	return DB.AutoMigrate(
 		&models.User{},
+		&models.File{},
+		&models.FileMetadata{},
+		&models.FileAccessLog{},
 	)
 }
 
