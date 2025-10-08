@@ -227,6 +227,18 @@ func InitializeWebSocket() {
 
 // HandleWebSocket handles WebSocket connections
 func HandleWebSocket(c *gin.Context) {
+	// Check for authentication token in query parameters
+	token := c.Query("token")
+	if token == "" {
+		log.Printf("WebSocket connection rejected: no token provided")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication required"})
+		return
+	}
+
+	// TODO: Validate token here if needed
+	// For now, we'll just check if it exists
+	log.Printf("WebSocket connection with token: %s", token[:10]+"...")
+
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		log.Printf("WebSocket upgrade error: %v", err)

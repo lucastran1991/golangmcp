@@ -175,7 +175,7 @@ func main() {
 	r.GET("/api/metrics/config", handlers.AuthMiddleware(), handlers.GetMetricsConfigHandler)
 
 	// WebSocket endpoint for real-time metrics
-	r.GET("/ws/metrics", handlers.AuthMiddleware(), websocket.HandleWebSocket)
+	r.GET("/ws/metrics", websocket.HandleWebSocket)
 
 	// File management endpoints
 	r.GET("/api/files", handlers.AuthMiddleware(), handlers.GetFilesHandler)

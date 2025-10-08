@@ -31,7 +31,9 @@ export class MetricsWebSocket {
         // Get auth token from localStorage
         const token = localStorage.getItem('authToken');
         if (!token) {
-          throw new Error('No authentication token found');
+          const error = new Error('No authentication token found. Please log in first.');
+          console.error('WebSocket connection failed:', error.message);
+          throw error;
         }
 
         // Create WebSocket connection with auth token
@@ -59,11 +61,13 @@ export class MetricsWebSocket {
 
         this.ws.onerror = (error) => {
           console.error('WebSocket error:', error);
+          console.error('WebSocket URL:', wsUrl);
+          console.error('WebSocket readyState:', this.ws?.readyState);
           this.isConnecting = false;
           if (this.onErrorCallback) {
             this.onErrorCallback(error);
           }
-          reject(error);
+          reject(new Error(`WebSocket connection failed: ${error.type || 'Unknown error'}`));
         };
 
         this.ws.onclose = (event) => {
