@@ -28,8 +28,8 @@ export class MetricsWebSocket {
       this.isConnecting = true;
 
       try {
-        // Get auth token from localStorage
-        const token = localStorage.getItem('authToken');
+        // Get auth token from localStorage (check both possible keys)
+        let token = localStorage.getItem('token') || localStorage.getItem('authToken');
         if (!token) {
           const error = new Error('No authentication token found. Please log in first.');
           console.error('WebSocket connection failed:', error.message);
@@ -38,10 +38,24 @@ export class MetricsWebSocket {
 
         // Create WebSocket connection with auth token
         const wsUrl = `${this.url}?token=${encodeURIComponent(token)}`;
+        console.log('Attempting WebSocket connection to:', wsUrl);
         this.ws = new WebSocket(wsUrl);
 
+        // Set connection timeout
+        const connectionTimeout = setTimeout(() => {
+          if (this.ws && this.ws.readyState === WebSocket.CONNECTING) {
+            console.error('WebSocket connection timeout');
+            this.ws.close();
+            this.isConnecting = false;
+            reject(new Error('WebSocket connection timeout'));
+          }
+        }, 10000); // 10 second timeout
+
         this.ws.onopen = () => {
-          console.log('WebSocket connected');
+          clearTimeout(connectionTimeout);
+          console.log('WebSocket connected successfully');
+          console.log('WebSocket URL:', wsUrl);
+          console.log('WebSocket readyState:', this.ws?.readyState);
           this.isConnecting = false;
           this.reconnectAttempts = 0;
           this.reconnectInterval = 1000;
@@ -60,17 +74,20 @@ export class MetricsWebSocket {
         };
 
         this.ws.onerror = (error) => {
-          console.error('WebSocket error:', error);
+          clearTimeout(connectionTimeout);
+          console.error('WebSocket error occurred');
           console.error('WebSocket URL:', wsUrl);
-          console.error('WebSocket readyState:', this.ws?.readyState);
+          console.error('WebSocket readyState:', this.ws?.readyState ?? 'undefined');
+          console.error('Error event:', error);
           this.isConnecting = false;
           if (this.onErrorCallback) {
             this.onErrorCallback(error);
           }
-          reject(new Error(`WebSocket connection failed: ${error.type || 'Unknown error'}`));
+          reject(new Error(`WebSocket connection failed: ${error.type || 'Connection error'}`));
         };
 
         this.ws.onclose = (event) => {
+          clearTimeout(connectionTimeout);
           console.log('WebSocket closed:', event.code, event.reason);
           this.isConnecting = false;
           this.ws = null;
@@ -86,6 +103,7 @@ export class MetricsWebSocket {
         };
 
       } catch (error) {
+        clearTimeout(connectionTimeout);
         this.isConnecting = false;
         reject(error);
       }

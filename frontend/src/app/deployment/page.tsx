@@ -73,6 +73,7 @@ export default function DeploymentPage() {
     if (!user) return;
 
     const ws = createMetricsWebSocket();
+    let fallbackInterval: NodeJS.Timeout | null = null;
     
     ws.onMessage((data: RealtimeMetrics) => {
       setRealtimeData(prev => {
@@ -85,24 +86,66 @@ export default function DeploymentPage() {
     ws.onError((error) => {
       console.error('WebSocket error:', error);
       setWsConnected(false);
+      setError('WebSocket connection error. Real-time metrics may be unavailable.');
+      
+      // Start fallback polling if WebSocket fails
+      if (!fallbackInterval) {
+        console.log('Starting fallback polling for metrics...');
+        fallbackInterval = setInterval(async () => {
+          try {
+            const response = await metricsAPI.getSystemMetrics();
+            const metrics = response.data.data;
+            const realtimeData: RealtimeMetrics = {
+              timestamp: new Date().toISOString(),
+              cpu: metrics.cpu.usage,
+              memory: metrics.memory.usage,
+              disk: metrics.disk.usage,
+              network: {
+                bytes_sent: metrics.network.bytes_sent,
+                bytes_recv: metrics.network.bytes_recv,
+                packets_sent: metrics.network.packets_sent,
+                packets_recv: metrics.network.packets_recv,
+              }
+            };
+            setRealtimeData(prev => {
+              const newData = [...prev, realtimeData];
+              return newData.slice(-60);
+            });
+          } catch (err) {
+            console.error('Fallback polling failed:', err);
+          }
+        }, 5000); // Poll every 5 seconds
+      }
     });
 
     ws.onClose(() => {
+      console.log('WebSocket connection closed');
       setWsConnected(false);
     });
 
     ws.connect()
       .then(() => {
         setWsConnected(true);
+        setError(null); // Clear any previous errors
         console.log('WebSocket connected for real-time metrics');
+        
+        // Clear any existing fallback interval
+        if (fallbackInterval) {
+          clearInterval(fallbackInterval);
+          fallbackInterval = null;
+        }
       })
       .catch((error) => {
         console.error('Failed to connect WebSocket:', error);
+        setError(error.message || 'Failed to establish WebSocket connection.');
         setWsConnected(false);
       });
 
     return () => {
       ws.disconnect();
+      if (fallbackInterval) {
+        clearInterval(fallbackInterval);
+      }
     };
   }, [user]);
 
