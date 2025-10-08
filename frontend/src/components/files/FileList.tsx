@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -37,13 +37,26 @@ export function FileList({ className, onFileSelect, onFileDelete }: FileListProp
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<string>('');
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   useEffect(() => {
     fetchFiles();
+  }, [debouncedSearchQuery, filterType]);
+
+  useEffect(() => {
     fetchStats();
-  }, [searchQuery, filterType]);
+  }, []);
 
   const fetchFiles = async () => {
     try {
@@ -51,14 +64,18 @@ export function FileList({ className, onFileSelect, onFileDelete }: FileListProp
       setError(null);
       
       const params: any = { limit: 50 };
-      if (searchQuery) params.search = searchQuery;
+      if (debouncedSearchQuery) params.search = debouncedSearchQuery;
       if (filterType) params.type = filterType;
       
       const response = await filesAPI.getFiles(params);
       setFiles(response.data.data);
     } catch (err: any) {
       console.error('Failed to fetch files:', err);
-      setError(err.response?.data?.error || 'Failed to load files');
+      if (err.response?.status === 429) {
+        setError('Too many requests. Please wait a moment and try again.');
+      } else {
+        setError(err.response?.data?.error || 'Failed to load files');
+      }
     } finally {
       setLoading(false);
     }
@@ -68,8 +85,15 @@ export function FileList({ className, onFileSelect, onFileDelete }: FileListProp
     try {
       const response = await filesAPI.getFileStats();
       setStats(response.data.data);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to fetch file stats:', err);
+      if (err.response?.status === 429) {
+        console.warn('Rate limited while fetching stats, will retry later');
+        // Retry after a delay
+        setTimeout(() => {
+          fetchStats();
+        }, 60000); // Retry after 1 minute
+      }
     }
   };
 
