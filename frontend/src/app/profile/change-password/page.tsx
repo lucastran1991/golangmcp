@@ -115,7 +115,7 @@ export default function ChangePasswordPage() {
       setSuccess(null);
 
       await profileAPI.changePassword({
-        current_password: formData.current_password,
+        old_password: formData.current_password,
         new_password: formData.new_password,
       });
       
@@ -265,7 +265,7 @@ export default function ChangePasswordPage() {
                         />
                       </div>
                       <span className="text-sm font-medium text-gray-600">
-                        {passwordStrength.score > 0 ? passwordStrength.label : 'Enter password'}
+                        {passwordStrength.score > 0 ? `Strength: ${passwordStrength.score}/5` : 'Enter password'}
                       </span>
                     </div>
                     <p className="text-xs text-gray-500">

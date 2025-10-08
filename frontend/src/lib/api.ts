@@ -110,7 +110,7 @@ export const profileAPI = {
       },
     });
   },
-  uploadAvatar: async (file: File) => {
+  uploadAvatar: async (file: globalThis.File) => {
     const formData = new FormData();
     formData.append('avatar', file);
     
@@ -175,7 +175,7 @@ export const filesAPI = {
     return api.get(`/api/files${queryString ? `?${queryString}` : ''}`);
   },
   getFile: (id: number) => api.get(`/api/files/${id}`),
-  uploadFile: async (file: File, description?: string, tags?: string, isPublic?: boolean) => {
+  uploadFile: async (file: globalThis.File, description?: string, tags?: string, isPublic?: boolean) => {
     const formData = new FormData();
     formData.append('file', file);
     if (description) formData.append('description', description);

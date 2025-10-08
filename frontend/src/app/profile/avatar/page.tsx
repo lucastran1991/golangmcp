@@ -53,7 +53,7 @@ export default function AvatarUploadPage() {
     }
   }, []);
 
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = (file: globalThis.File) => {
     setError(null);
     setSuccess(null);
     

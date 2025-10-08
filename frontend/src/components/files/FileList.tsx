@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { filesAPI, File, FileStats } from '@/lib/api';
+import { filesAPI, FileStats } from '@/lib/api';
+import type { File } from '@/lib/api';
 import { 
   Search, 
   Filter, 
@@ -15,7 +16,7 @@ import {
   Eye, 
   FileText, 
   FileSpreadsheet, 
-  File,
+  File as FileIcon,
   MoreHorizontal,
   Calendar,
   User,
@@ -120,7 +121,7 @@ export function FileList({ className, onFileSelect, onFileDelete }: FileListProp
       case 'csv':
         return <FileText className="h-5 w-5 text-orange-500" />;
       default:
-        return <File className="h-5 w-5 text-gray-500" />;
+        return <FileIcon className="h-5 w-5 text-gray-500" />;
     }
   };
 
@@ -207,7 +208,7 @@ export function FileList({ className, onFileSelect, onFileDelete }: FileListProp
       ) : files.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-md border-0 shadow-xl">
           <CardContent className="py-12 text-center">
-            <File className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <FileIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No files found</h3>
             <p className="text-gray-600">
               {searchQuery || filterType 

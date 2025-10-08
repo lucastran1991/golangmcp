@@ -3,6 +3,8 @@
  * Provides helper functions for managing user sessions in the browser
  */
 
+import type { User } from '@/lib/api';
+
 export interface SessionData {
   token: string;
   user: User;

@@ -9,12 +9,13 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { filesAPI, File } from '@/lib/api';
+import { filesAPI } from '@/lib/api';
+import type { File } from '@/lib/api';
 import { 
   Upload, 
   FileText, 
   FileSpreadsheet, 
-  File, 
+  File as FileIcon, 
   X, 
   CheckCircle, 
   AlertTriangle,
@@ -39,14 +40,14 @@ const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 export function FileUpload({ onUploadSuccess, onUploadError, className }: FileUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<globalThis.File | null>(null);
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
   const [isPublic, setIsPublic] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: globalThis.File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
@@ -133,7 +134,7 @@ export function FileUpload({ onUploadSuccess, onUploadError, className }: FileUp
     setUploadProgress(0);
   };
 
-  const getFileIcon = (file: File) => {
+  const getFileIcon = (file: globalThis.File) => {
     switch (file.type) {
       case 'text/plain':
         return <FileText className="h-8 w-8 text-blue-500" />;
@@ -143,7 +144,7 @@ export function FileUpload({ onUploadSuccess, onUploadError, className }: FileUp
       case 'application/csv':
         return <FileText className="h-8 w-8 text-orange-500" />;
       default:
-        return <File className="h-8 w-8 text-gray-500" />;
+        return <FileIcon className="h-8 w-8 text-gray-500" />;
     }
   };
 
