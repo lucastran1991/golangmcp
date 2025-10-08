@@ -140,6 +140,9 @@ func main() {
 	r.POST("/admin/users/bulk-role", handlers.AuthMiddleware(), handlers.RequirePermission("admin.users"), handlers.BulkRoleAssignmentHandler)
 	r.GET("/admin/rbac/stats", handlers.AuthMiddleware(), handlers.RequirePermission("admin.stats"), handlers.GetRoleStatsHandler)
 
+	// User management endpoints
+	r.GET("/users", handlers.AuthMiddleware(), getUsersHandler)
+	
 	// Admin user management endpoints
 	r.GET("/admin/users/:id", handlers.AuthMiddleware(), handlers.RequirePermission("admin.users"), handlers.GetUserProfileHandler)
 	r.PUT("/admin/users/:id", handlers.AuthMiddleware(), handlers.RequirePermission("admin.users"), handlers.UpdateUserProfileHandler)
@@ -180,12 +183,15 @@ func protectedHandler(c *gin.Context) {
 
 // Get users handler (demonstrates GORM usage)
 func getUsersHandler(c *gin.Context) {
+	log.Println("getUsersHandler called")
 	users, err := models.GetAll(db.DB, 100, 0) // Get first 100 users
 	if err != nil {
+		log.Printf("Error fetching users: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
 		return
 	}
 
+	log.Printf("Found %d users", len(users))
 	c.JSON(http.StatusOK, users)
 }
 
