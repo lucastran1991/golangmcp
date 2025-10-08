@@ -118,40 +118,60 @@ export default function EditProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex items-center space-x-2">
-          <Loader2 className="h-6 w-6 animate-spin" />
-          <span>Loading profile...</span>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="relative z-10 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+          <div className="flex items-center space-x-3">
+            <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+            <span className="text-gray-700 font-medium">Loading profile...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+      </div>
+      <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-6">
             <Button
               variant="outline"
               size="sm"
               onClick={() => router.push('/dashboard')}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Dashboard</span>
             </Button>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Edit Profile</h1>
-          <p className="mt-2 text-gray-600">
-            Update your personal information and preferences
-          </p>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              Edit Profile
+            </h1>
+            <p className="text-lg text-gray-600 max-w-xl mx-auto">
+              Update your personal information and preferences with our modern interface
+            </p>
+          </div>
         </div>
 
-        <Card>
+        <Card className="bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <User className="h-5 w-5" />
+            <CardTitle className="flex items-center space-x-2 text-gray-800">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg">
+                <User className="h-5 w-5 text-white" />
+              </div>
               <span>Personal Information</span>
             </CardTitle>
           </CardHeader>
@@ -283,19 +303,20 @@ export default function EditProfilePage() {
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-6 border-t">
+              <div className="flex items-center justify-between pt-6 border-t border-white/30">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleCancel}
                   disabled={saving}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300 transition-all duration-200"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={saving}
-                  className="min-w-[120px]"
+                  className="min-w-[140px] bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                 >
                   {saving ? (
                     <>
@@ -312,10 +333,12 @@ export default function EditProfilePage() {
         </Card>
 
         {profile && (
-          <Card className="mt-6">
+          <Card className="mt-6 bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Calendar className="h-5 w-5" />
+              <CardTitle className="flex items-center space-x-2 text-gray-800">
+                <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg">
+                  <Calendar className="h-5 w-5 text-white" />
+                </div>
                 <span>Account Information</span>
               </CardTitle>
             </CardHeader>

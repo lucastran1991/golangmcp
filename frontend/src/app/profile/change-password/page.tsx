@@ -151,30 +151,43 @@ export default function ChangePasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-6">
             <Button
               variant="outline"
               size="sm"
               onClick={() => router.push('/dashboard')}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Dashboard</span>
             </Button>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Change Password</h1>
-          <p className="mt-2 text-gray-600">
-            Update your password to keep your account secure
-          </p>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              Change Password
+            </h1>
+            <p className="text-lg text-gray-600 max-w-xl mx-auto">
+              Update your password to keep your account secure with our modern interface
+            </p>
+          </div>
         </div>
 
-        <Card>
+        <Card className="bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Shield className="h-5 w-5" />
+            <CardTitle className="flex items-center space-x-2 text-gray-800">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg">
+                <Shield className="h-5 w-5 text-white" />
+              </div>
               <span>Password Security</span>
             </CardTitle>
           </CardHeader>
@@ -295,30 +308,51 @@ export default function ChangePasswordPage() {
                 )}
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="font-medium text-blue-900 mb-2">Password Requirements:</h4>
-                <ul className="text-sm text-blue-800 space-y-1">
-                  <li>• At least 8 characters long</li>
-                  <li>• Contains uppercase and lowercase letters</li>
-                  <li>• Contains at least one number</li>
-                  <li>• Contains at least one special character</li>
-                  <li>• Different from your current password</li>
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 shadow-lg">
+                <h4 className="font-medium text-blue-900 mb-3 flex items-center">
+                  <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg mr-2">
+                    <Shield className="h-4 w-4 text-white" />
+                  </div>
+                  Password Requirements:
+                </h4>
+                <ul className="text-sm text-blue-800 space-y-2">
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    At least 8 characters long
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    Contains uppercase and lowercase letters
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    Contains at least one number
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    Contains at least one special character
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    Different from your current password
+                  </li>
                 </ul>
               </div>
 
-              <div className="flex items-center justify-between pt-6 border-t">
+              <div className="flex items-center justify-between pt-6 border-t border-white/30">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleCancel}
                   disabled={loading}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300 transition-all duration-200"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={loading || passwordStrength.score < 3 || formData.new_password !== formData.confirm_password}
-                  className="min-w-[140px]"
+                  className="min-w-[160px] bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
                 >
                   {loading ? (
                     <>
@@ -334,30 +368,40 @@ export default function ChangePasswordPage() {
           </CardContent>
         </Card>
 
-        <Card className="mt-6">
+        <Card className="mt-6 bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Shield className="h-5 w-5" />
+            <CardTitle className="flex items-center space-x-2 text-gray-800">
+              <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg">
+                <Shield className="h-5 w-5 text-white" />
+              </div>
               <span>Security Tips</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3 text-sm text-gray-600">
-              <div className="flex items-start space-x-2">
-                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <p>Use a unique password that you don't use anywhere else</p>
+            <div className="space-y-4 text-sm text-gray-600">
+              <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full">
+                  <CheckCircle className="h-4 w-4 text-white" />
+                </div>
+                <p className="font-medium">Use a unique password that you don't use anywhere else</p>
               </div>
-              <div className="flex items-start space-x-2">
-                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <p>Consider using a password manager to generate and store strong passwords</p>
+              <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="p-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full">
+                  <CheckCircle className="h-4 w-4 text-white" />
+                </div>
+                <p className="font-medium">Consider using a password manager to generate and store strong passwords</p>
               </div>
-              <div className="flex items-start space-x-2">
-                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <p>Change your password regularly, especially if you suspect it may have been compromised</p>
+              <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+                  <CheckCircle className="h-4 w-4 text-white" />
+                </div>
+                <p className="font-medium">Change your password regularly, especially if you suspect it may have been compromised</p>
               </div>
-              <div className="flex items-start space-x-2">
-                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <p>Never share your password with anyone or write it down in an insecure location</p>
+              <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
+                <div className="p-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full">
+                  <CheckCircle className="h-4 w-4 text-white" />
+                </div>
+                <p className="font-medium">Never share your password with anyone or write it down in an insecure location</p>
               </div>
             </div>
           </CardContent>

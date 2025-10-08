@@ -170,34 +170,52 @@ export default function AccountSettingsPage() {
 
   if (loading && !sessions.length) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex items-center space-x-2">
-          <Loader2 className="h-6 w-6 animate-spin" />
-          <span>Loading settings...</span>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="relative z-10 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+          <div className="flex items-center space-x-3">
+            <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+            <span className="text-gray-700 font-medium">Loading settings...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+      </div>
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-6">
             <Button
               variant="outline"
               size="sm"
               onClick={() => router.push('/dashboard')}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Dashboard</span>
             </Button>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Account Settings</h1>
-          <p className="mt-2 text-gray-600">
-            Manage your account preferences and security settings
-          </p>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              Account Settings
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Manage your account preferences and security settings with our modern interface
+            </p>
+          </div>
         </div>
 
         {error && (
@@ -213,13 +231,13 @@ export default function AccountSettingsPage() {
         )}
 
         {/* Quick Navigation */}
-        <Card className="mb-6">
+        <Card className="mb-8 bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
           <CardContent className="pt-6">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               <Button
                 variant="outline"
                 onClick={() => router.push('/profile/edit')}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
               >
                 <Settings className="h-4 w-4" />
                 <span>Edit Profile</span>
@@ -227,7 +245,7 @@ export default function AccountSettingsPage() {
               <Button
                 variant="outline"
                 onClick={() => router.push('/profile/change-password')}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
               >
                 <Shield className="h-4 w-4" />
                 <span>Change Password</span>
@@ -235,7 +253,7 @@ export default function AccountSettingsPage() {
               <Button
                 variant="outline"
                 onClick={() => router.push('/profile/avatar')}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
               >
                 <Globe className="h-4 w-4" />
                 <span>Upload Avatar</span>
@@ -246,10 +264,12 @@ export default function AccountSettingsPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Notification Settings */}
-          <Card>
+          <Card className="bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Bell className="h-5 w-5" />
+              <CardTitle className="flex items-center space-x-2 text-gray-800">
+                <div className="p-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg">
+                  <Bell className="h-5 w-5 text-white" />
+                </div>
                 <span>Notifications</span>
               </CardTitle>
             </CardHeader>
@@ -299,10 +319,12 @@ export default function AccountSettingsPage() {
           </Card>
 
           {/* Privacy Settings */}
-          <Card>
+          <Card className="bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Eye className="h-5 w-5" />
+              <CardTitle className="flex items-center space-x-2 text-gray-800">
+                <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg">
+                  <Eye className="h-5 w-5 text-white" />
+                </div>
                 <span>Privacy</span>
               </CardTitle>
             </CardHeader>
@@ -350,24 +372,26 @@ export default function AccountSettingsPage() {
           </Card>
 
           {/* Active Sessions */}
-          <Card className="lg:col-span-2">
+          <Card className="lg:col-span-2 bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.01]">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Globe className="h-5 w-5" />
+              <CardTitle className="flex items-center space-x-2 text-gray-800">
+                <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg">
+                  <Globe className="h-5 w-5 text-white" />
+                </div>
                 <span>Active Sessions</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {sessions && sessions.length > 0 ? sessions.map((session) => (
-                  <div key={session.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div key={session.id} className="flex items-center justify-between p-4 bg-white/60 backdrop-blur-sm border border-white/30 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200">
                     <div className="space-y-1">
-                      <p className="font-medium">{session.user_agent}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-gray-800">{session.user_agent}</p>
+                      <p className="text-sm text-gray-600">
                         IP: {session.ip_address} • 
                         Last active: {new Date(session.last_seen).toLocaleString()}
                         {session.is_active && (
-                          <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                          <span className="ml-2 px-3 py-1 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 text-xs rounded-full font-medium shadow-sm">
                             Active Session
                           </span>
                         )}
@@ -378,6 +402,7 @@ export default function AccountSettingsPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => handleInvalidateSession(session.id)}
+                        className="bg-red-50 hover:bg-red-100 text-red-700 border-red-200 hover:border-red-300 transition-all duration-200"
                       >
                         Revoke
                       </Button>
@@ -390,11 +415,11 @@ export default function AccountSettingsPage() {
                 )}
                 
                 {sessions && sessions.length > 1 && (
-                  <div className="pt-4 border-t">
+                  <div className="pt-4 border-t border-white/30">
                     <Button
                       variant="outline"
                       onClick={handleInvalidateAllSessions}
-                      className="w-full"
+                      className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
                     >
                       Revoke All Other Sessions
                     </Button>
@@ -405,15 +430,17 @@ export default function AccountSettingsPage() {
           </Card>
 
           {/* Danger Zone */}
-          <Card className="lg:col-span-2 border-red-200">
+          <Card className="lg:col-span-2 bg-red-50/80 backdrop-blur-sm border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-red-600">
-                <Shield className="h-5 w-5" />
+                <div className="p-2 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
                 <span>Danger Zone</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg bg-red-50">
+              <div className="flex items-center justify-between p-4 border border-red-200 rounded-xl bg-white/60 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
                 <div>
                   <h4 className="font-medium text-red-900">Logout</h4>
                   <p className="text-sm text-red-700">
@@ -423,14 +450,14 @@ export default function AccountSettingsPage() {
                 <Button
                   variant="outline"
                   onClick={handleLogout}
-                  className="border-red-300 text-red-700 hover:bg-red-100"
+                  className="border-red-300 text-red-700 hover:bg-red-100 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout
                 </Button>
               </div>
 
-              <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg bg-red-50">
+              <div className="flex items-center justify-between p-4 border border-red-200 rounded-xl bg-white/60 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
                 <div>
                   <h4 className="font-medium text-red-900">Delete Account</h4>
                   <p className="text-sm text-red-700">
@@ -440,7 +467,7 @@ export default function AccountSettingsPage() {
                 <Button
                   variant="outline"
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="border-red-300 text-red-700 hover:bg-red-100"
+                  className="border-red-300 text-red-700 hover:bg-red-100 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
                   Delete Account
@@ -451,11 +478,11 @@ export default function AccountSettingsPage() {
         </div>
 
         {/* Save Settings Button */}
-        <div className="mt-6 flex justify-end">
+        <div className="mt-8 flex justify-center">
           <Button
             onClick={handleSaveSettings}
             disabled={loading}
-            className="min-w-[120px]"
+            className="min-w-[160px] bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105"
           >
             {loading ? (
               <>
@@ -470,10 +497,15 @@ export default function AccountSettingsPage() {
 
         {/* Delete Account Confirmation Modal */}
         {showDeleteConfirm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <Card className="w-full max-w-md mx-4">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <Card className="w-full max-w-md mx-4 bg-white/95 backdrop-blur-sm border-white/20 shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-red-600">Delete Account</CardTitle>
+                <CardTitle className="text-red-600 flex items-center space-x-2">
+                  <div className="p-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg">
+                    <Shield className="h-5 w-5 text-white" />
+                  </div>
+                  <span>Delete Account</span>
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-gray-600">
@@ -492,14 +524,14 @@ export default function AccountSettingsPage() {
                     className="font-mono"
                   />
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex space-x-3">
                   <Button
                     variant="outline"
                     onClick={() => {
                       setShowDeleteConfirm(false);
                       setDeleteConfirmText('');
                     }}
-                    className="flex-1"
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300 transition-all duration-200"
                   >
                     Cancel
                   </Button>
@@ -507,7 +539,7 @@ export default function AccountSettingsPage() {
                     variant="destructive"
                     onClick={handleDeleteAccount}
                     disabled={deleteConfirmText !== 'DELETE' || loading}
-                    className="flex-1"
+                    className="flex-1 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
                   >
                     {loading ? (
                       <>

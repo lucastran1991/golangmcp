@@ -146,12 +146,15 @@ export default function DashboardPage() {
                 <div className="flex items-center space-x-4">
                   <div className="relative">
                     <Avatar className="h-16 w-16 ring-4 ring-white/50 shadow-lg">
-                      <AvatarImage src={user.avatar ? `http://localhost:8080${user.avatar}` : undefined} />
-                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-lg">
+                      <AvatarImage 
+                        src={user.avatar ? `http://localhost:8080${user.avatar}` : undefined}
+                        className="object-cover object-center"
+                      />
+                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-lg flex items-center justify-center">
                         {user.username.charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-gray shadow-lg"></div>
                   </div>
                   <div className="space-y-1">
                     <h3 className="text-lg font-semibold text-gray-800">{user.username}</h3>

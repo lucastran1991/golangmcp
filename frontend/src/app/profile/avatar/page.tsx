@@ -208,7 +208,7 @@ export default function AvatarUploadPage() {
                     alt="Current Avatar" 
                     className="w-20 h-20 rounded-full object-cover ring-4 ring-white/50 shadow-lg"
                   />
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-gray shadow-lg"></div>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Current profile picture</p>
