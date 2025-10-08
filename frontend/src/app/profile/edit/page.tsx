@@ -189,19 +189,7 @@ export default function EditProfilePage() {
                 </Alert>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username *</Label>
-                  <Input
-                    id="username"
-                    name="username"
-                    type="text"
-                    value={formData.username}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full"
-                  />
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email *</Label>
@@ -215,9 +203,7 @@ export default function EditProfilePage() {
                     className="w-full"
                   />
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="first_name">First Name</Label>
                   <Input
