@@ -15,17 +15,24 @@ export class MetricsWebSocket {
 
   connect(): Promise<void> {
     return new Promise((resolve, reject) => {
+      console.log('WebSocket connect() called');
+      console.log('Current WebSocket state:', this.ws ? this.ws.readyState : 'null');
+      console.log('Is connecting:', this.isConnecting);
+      
       if (this.ws?.readyState === WebSocket.OPEN) {
+        console.log('WebSocket already open, resolving immediately');
         resolve();
         return;
       }
 
       if (this.isConnecting) {
+        console.log('Connection already in progress, rejecting');
         reject(new Error('Connection already in progress'));
         return;
       }
 
       this.isConnecting = true;
+      console.log('Starting WebSocket connection process');
 
       try {
         // Get auth token from localStorage (check both possible keys)
@@ -39,7 +46,24 @@ export class MetricsWebSocket {
         // Create WebSocket connection with auth token
         const wsUrl = `${this.url}?token=${encodeURIComponent(token)}`;
         console.log('Attempting WebSocket connection to:', wsUrl);
-        this.ws = new WebSocket(wsUrl);
+        console.log('Token length:', token.length);
+        console.log('WebSocket support:', typeof WebSocket !== 'undefined');
+        
+        try {
+          this.ws = new WebSocket(wsUrl);
+          console.log('WebSocket object created:', !!this.ws);
+          console.log('Initial readyState:', this.ws.readyState);
+          
+          // Verify WebSocket was created successfully
+          if (!this.ws) {
+            throw new Error('WebSocket creation returned null');
+          }
+        } catch (wsError) {
+          console.error('Failed to create WebSocket:', wsError);
+          this.isConnecting = false;
+          reject(new Error(`Failed to create WebSocket: ${wsError.message}`));
+          return;
+        }
 
         // Set connection timeout
         const connectionTimeout = setTimeout(() => {
@@ -51,11 +75,19 @@ export class MetricsWebSocket {
           }
         }, 10000); // 10 second timeout
 
+        // Verify WebSocket is still valid before setting up event handlers
+        if (!this.ws) {
+          clearTimeout(connectionTimeout);
+          this.isConnecting = false;
+          reject(new Error('WebSocket object became null before setting up event handlers'));
+          return;
+        }
+
         this.ws.onopen = () => {
           clearTimeout(connectionTimeout);
           console.log('WebSocket connected successfully');
           console.log('WebSocket URL:', wsUrl);
-          console.log('WebSocket readyState:', this.ws?.readyState);
+          console.log('WebSocket readyState:', this.ws ? this.ws.readyState : 'WebSocket is null');
           this.isConnecting = false;
           this.reconnectAttempts = 0;
           this.reconnectInterval = 1000;
@@ -77,13 +109,55 @@ export class MetricsWebSocket {
           clearTimeout(connectionTimeout);
           console.error('WebSocket error occurred');
           console.error('WebSocket URL:', wsUrl);
-          console.error('WebSocket readyState:', this.ws?.readyState ?? 'undefined');
-          console.error('Error event:', error);
+          console.error('WebSocket readyState:', this.ws ? this.ws.readyState : 'WebSocket is null');
+          console.error('WebSocket state constants:', {
+            CONNECTING: WebSocket.CONNECTING,
+            OPEN: WebSocket.OPEN,
+            CLOSING: WebSocket.CLOSING,
+            CLOSED: WebSocket.CLOSED
+          });
+          console.error('Error event details:', {
+            type: error.type,
+            target: error.target,
+            currentTarget: error.currentTarget,
+            bubbles: error.bubbles,
+            cancelable: error.cancelable,
+            defaultPrevented: error.defaultPrevented,
+            eventPhase: error.eventPhase,
+            isTrusted: error.isTrusted,
+            timeStamp: error.timeStamp
+          });
           this.isConnecting = false;
+          
+          // Provide more specific error messages based on readyState
+          let errorMessage = 'WebSocket connection failed';
+          if (this.ws) {
+            switch (this.ws.readyState) {
+              case WebSocket.CONNECTING:
+                errorMessage = 'WebSocket connection failed during handshake';
+                break;
+              case WebSocket.OPEN:
+                errorMessage = 'WebSocket connection failed after opening';
+                break;
+              case WebSocket.CLOSING:
+                errorMessage = 'WebSocket connection failed during closing';
+                break;
+              case WebSocket.CLOSED:
+                errorMessage = 'WebSocket connection failed and is closed';
+                break;
+              default:
+                errorMessage = 'WebSocket connection failed with unknown state';
+            }
+          } else {
+            errorMessage = 'WebSocket connection failed - WebSocket object is null';
+          }
+          
+          // Call error callback if it exists
           if (this.onErrorCallback) {
             this.onErrorCallback(error);
           }
-          reject(new Error(`WebSocket connection failed: ${error.type || 'Connection error'}`));
+          
+          reject(new Error(errorMessage));
         };
 
         this.ws.onclose = (event) => {
