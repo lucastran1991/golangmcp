@@ -9,6 +9,7 @@ export default function HomePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [animationStep, setAnimationStep] = useState(0);
+  const [particles, setParticles] = useState<Array<{left: string, top: string, animationDelay: string, animationDuration: string}>>([]);
 
   useEffect(() => {
     if (!loading) {
@@ -27,6 +28,21 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
+  // Generate particles only on client side to avoid hydration mismatch
+  useEffect(() => {
+    const generateParticles = () => {
+      const newParticles = Array.from({ length: 20 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 3}s`,
+        animationDuration: `${2 + Math.random() * 2}s`
+      }));
+      setParticles(newParticles);
+    };
+
+    generateParticles();
+  }, []);
+
   const features = [
     { icon: Zap, text: "Lightning Fast", color: "from-yellow-400 to-orange-500" },
     { icon: Shield, text: "Secure", color: "from-green-400 to-emerald-500" },
@@ -42,15 +58,15 @@ export default function HomePage() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         
         {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle, i) => (
           <div
             key={i}
             className="absolute w-2 h-2 bg-gradient-to-r from-blue-400/30 to-purple-400/30 rounded-full animate-bounce"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              left: particle.left,
+              top: particle.top,
+              animationDelay: particle.animationDelay,
+              animationDuration: particle.animationDuration
             }}
           />
         ))}

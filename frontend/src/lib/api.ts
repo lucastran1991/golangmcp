@@ -125,6 +125,11 @@ export const profileAPI = {
   invalidateAllSessions: () => api.delete('/sessions'),
 };
 
+// Users API
+export const usersAPI = {
+  getUsers: () => api.get('/users'),
+};
+
 // Security API
 export const securityAPI = {
   getCSRFToken: () => api.get('/security/csrf-token'),

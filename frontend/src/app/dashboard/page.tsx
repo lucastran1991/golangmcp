@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { profileAPI, securityAPI, User, SecurityStatus } from '@/lib/api';
+import { profileAPI, securityAPI, usersAPI, User, SecurityStatus } from '@/lib/api';
 import { 
   User as UserIcon, 
   Mail, 
@@ -26,16 +26,22 @@ import {
   Star,
   Heart,
   TrendingUp,
-  Activity
+  Activity,
+  Users,
+  Eye,
+  MoreHorizontal
 } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [securityStatus, setSecurityStatus] = useState<SecurityStatus | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [usersLoading, setUsersLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [particles, setParticles] = useState<Array<{left: string, top: string, animationDelay: string, animationDuration: string}>>([]);
 
   useEffect(() => {
     if (!user) {
@@ -43,19 +49,41 @@ export default function DashboardPage() {
       return;
     }
 
-    const fetchSecurityStatus = async () => {
+    const fetchData = async () => {
       try {
-        const response = await securityAPI.getSecurityStatus();
-        setSecurityStatus(response.data.security_status);
+        // Fetch security status
+        const securityResponse = await securityAPI.getSecurityStatus();
+        setSecurityStatus(securityResponse.data.security_status);
+        
+        // Fetch users
+        setUsersLoading(true);
+        const usersResponse = await usersAPI.getUsers();
+        setUsers(usersResponse.data);
       } catch (err) {
-        console.error('Failed to fetch security status:', err);
+        console.error('Failed to fetch data:', err);
       } finally {
         setLoading(false);
+        setUsersLoading(false);
       }
     };
 
-    fetchSecurityStatus();
+    fetchData();
   }, [user, router]);
+
+  // Generate particles only on client side to avoid hydration mismatch
+  useEffect(() => {
+    const generateParticles = () => {
+      const newParticles = Array.from({ length: 15 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 4}s`,
+        animationDuration: `${3 + Math.random() * 2}s`
+      }));
+      setParticles(newParticles);
+    };
+
+    generateParticles();
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -100,15 +128,15 @@ export default function DashboardPage() {
           <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
           
           {/* Floating particles */}
-          {[...Array(15)].map((_, i) => (
+          {particles.map((particle, i) => (
             <div
               key={i}
               className="absolute w-1 h-1 bg-gradient-to-r from-blue-400/40 to-purple-400/40 rounded-full animate-bounce"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
-                animationDuration: `${3 + Math.random() * 2}s`
+                left: particle.left,
+                top: particle.top,
+                animationDelay: particle.animationDelay,
+                animationDuration: particle.animationDuration
               }}
             />
           ))}
@@ -358,6 +386,147 @@ export default function DashboardPage() {
                   <Settings className="h-4 w-4 mr-3 relative group-hover/btn:animate-pulse" />
                   <span className="relative">Account Settings</span>
                 </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Enhanced Users Table Section */}
+          <div className="mt-8">
+            <Card className="group bg-white/80 backdrop-blur-md border-0 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardHeader className="relative bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-t-lg border-b border-white/20">
+                <CardTitle className="flex items-center text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                    <div className="relative w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center mr-3 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:rotate-12">
+                      <Users className="h-5 w-5 text-white" />
+                    </div>
+                  </div>
+                  <span className="group-hover:animate-pulse">System Users</span>
+                </CardTitle>
+                <CardDescription className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                  {users.length} users registered in the system
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="relative">
+                {usersLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="flex items-center space-x-2">
+                      <Loader2 className="h-6 w-6 animate-spin text-indigo-500" />
+                      <span className="text-gray-600">Loading users...</span>
+                    </div>
+                  </div>
+                ) : users.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left py-3 px-4 font-semibold text-gray-700">User</th>
+                          <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>
+                          <th className="text-left py-3 px-4 font-semibold text-gray-700">Role</th>
+                          <th className="text-left py-3 px-4 font-semibold text-gray-700">Joined</th>
+                          <th className="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {users.map((systemUser, index) => (
+                          <tr 
+                            key={systemUser.id} 
+                            className={`border-b border-gray-100 hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 transition-all duration-200 group/row ${
+                              index % 2 === 0 ? 'bg-white/30' : 'bg-white/10'
+                            }`}
+                          >
+                            <td className="py-4 px-4">
+                              <div className="flex items-center space-x-3">
+                                <div className="relative group/avatar">
+                                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-sm opacity-20 group-hover/avatar:opacity-40 transition-opacity duration-300"></div>
+                                  <Avatar className="relative h-10 w-10 ring-2 ring-white/60 shadow-lg group-hover/avatar:shadow-xl transition-all duration-300 group-hover/avatar:scale-110">
+                                    <AvatarImage 
+                                      src={systemUser.avatar ? `http://localhost:8080${systemUser.avatar}` : undefined}
+                                      className="object-cover object-center"
+                                    />
+                                    <AvatarFallback className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold text-sm">
+                                      {systemUser.username.charAt(0).toUpperCase()}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  {systemUser.id === user?.id && (
+                                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-2 border-white shadow-lg animate-pulse">
+                                      <div className="w-full h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-ping"></div>
+                                    </div>
+                                  )}
+                                </div>
+                                <div>
+                                  <div className="flex items-center space-x-2">
+                                    <span className="font-medium text-gray-800 group-hover/row:text-indigo-600 transition-colors duration-200">
+                                      {systemUser.username}
+                                    </span>
+                                    {systemUser.id === user?.id && (
+                                      <Badge variant="secondary" className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs px-2 py-0.5">
+                                        You
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center text-sm text-gray-600 group-hover/row:text-gray-700 transition-colors duration-200">
+                                <Mail className="h-4 w-4 mr-2 text-gray-400" />
+                                {systemUser.email}
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <Badge 
+                                variant={systemUser.role === 'admin' ? 'default' : 'secondary'}
+                                className={`${
+                                  systemUser.role === 'admin' 
+                                    ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-sm' 
+                                    : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-sm'
+                                } group-hover/row:shadow-md transition-all duration-200`}
+                              >
+                                {systemUser.role}
+                              </Badge>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center text-sm text-gray-600 group-hover/row:text-gray-700 transition-colors duration-200">
+                                <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+                                {new Date(systemUser.created_at).toLocaleDateString()}
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <div className="flex items-center space-x-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="group/btn border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 relative overflow-hidden"
+                                >
+                                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
+                                  <Eye className="h-4 w-4 mr-1 relative group-hover/btn:animate-pulse" />
+                                  <span className="relative text-xs">View</span>
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="group/btn border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 relative overflow-hidden"
+                                >
+                                  <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
+                                  <MoreHorizontal className="h-4 w-4 relative group-hover/btn:animate-pulse" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Users className="h-8 w-8 text-indigo-400" />
+                    </div>
+                    <p className="text-gray-500">No users found</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
