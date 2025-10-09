@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -228,9 +229,10 @@ export function FileUpload({ onUploadSuccess, onUploadError, className }: FileUp
                   <p className="font-medium text-gray-900">{selectedFile.name}</p>
                   <p className="text-sm text-gray-500">{formatFileSize(selectedFile.size)}</p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
+                <MaterialButton
+                  variant="text"
+                  size="small"
+                  icon
                   onClick={(e) => {
                     e.stopPropagation();
                     clearFile();
@@ -238,7 +240,7 @@ export function FileUpload({ onUploadSuccess, onUploadError, className }: FileUp
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X className="h-4 w-4" />
-                </Button>
+                </MaterialButton>
               </div>
             </div>
           ) : (
@@ -315,33 +317,24 @@ export function FileUpload({ onUploadSuccess, onUploadError, className }: FileUp
 
             {/* Upload Button */}
             <div className="flex space-x-3">
-              <Button
+              <MaterialButton
                 onClick={handleUpload}
                 disabled={uploading}
-                className="flex-1 group/btn border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                loading={uploading}
+                variant="primary"
+                className="flex-1"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                {uploading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin relative" />
-                    <span className="relative">Uploading...</span>
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-4 w-4 mr-2 relative" />
-                    <span className="relative">Upload File</span>
-                  </>
-                )}
-              </Button>
+                <Upload className="h-4 w-4 mr-2" />
+                Upload File
+              </MaterialButton>
               
-              <Button
-                variant="outline"
+              <MaterialButton
+                variant="outlined"
                 onClick={clearFile}
                 disabled={uploading}
-                className="border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
               >
                 Cancel
-              </Button>
+              </MaterialButton>
             </div>
           </div>
         )}

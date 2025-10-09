@@ -8,6 +8,7 @@ import { FileUpload } from '@/components/files/FileUpload';
 import { FileList } from '@/components/files/FileList';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { File, FileStats } from '@/lib/api';
 import { 
@@ -116,16 +117,13 @@ export default function FilesPage() {
                 </div>
                 
                 <div className="flex items-center space-x-4">
-                  <Button
+                  <MaterialButton
                     onClick={() => setShowUpload(!showUpload)}
-                    className="group/btn border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                    variant="success"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                    <Upload className="h-4 w-4 mr-2 relative" />
-                    <span className="relative">
-                      {showUpload ? 'Hide Upload' : 'Upload Files'}
-                    </span>
-                  </Button>
+                    <Upload className="h-4 w-4 mr-2" />
+                    {showUpload ? 'Hide Upload' : 'Upload Files'}
+                  </MaterialButton>
                 </div>
               </div>
             </div>

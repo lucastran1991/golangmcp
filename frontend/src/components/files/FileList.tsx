@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -316,37 +317,37 @@ export function FileList({ className, onFileSelect, onFileDelete }: FileListProp
                   </div>
                   
                   <div className="flex items-center space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
+                    <MaterialButton
+                      variant="text"
+                      size="small"
+                      icon
                       onClick={() => handleDownload(file)}
-                      className="h-8 w-8 text-gray-400 hover:text-blue-600 hover:bg-blue-50"
+                      className="h-8 w-8 text-gray-400 hover:text-blue-600"
                     >
                       <Download className="h-4 w-4" />
-                    </Button>
+                    </MaterialButton>
                     
-                    <Button
-                      variant="ghost"
-                      size="icon"
+                    <MaterialButton
+                      variant="text"
+                      size="small"
+                      icon
                       onClick={() => onFileSelect?.(file)}
-                      className="h-8 w-8 text-gray-400 hover:text-green-600 hover:bg-green-50"
+                      className="h-8 w-8 text-gray-400 hover:text-green-600"
                     >
                       <Eye className="h-4 w-4" />
-                    </Button>
+                    </MaterialButton>
                     
-                    <Button
-                      variant="ghost"
-                      size="icon"
+                    <MaterialButton
+                      variant="text"
+                      size="small"
+                      icon
                       onClick={() => handleDelete(file)}
                       disabled={deletingId === file.id}
-                      className="h-8 w-8 text-gray-400 hover:text-red-600 hover:bg-red-50"
+                      loading={deletingId === file.id}
+                      className="h-8 w-8 text-gray-400 hover:text-red-600"
                     >
-                      {deletingId === file.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Trash2 className="h-4 w-4" />
-                      )}
-                    </Button>
+                      <Trash2 className="h-4 w-4" />
+                    </MaterialButton>
                   </div>
                 </div>
               </CardContent>

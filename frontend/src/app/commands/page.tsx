@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { LayoutWrapper } from '@/components/layout/LayoutWrapper';
 import { commandAPI, Command, CommandStats } from '@/lib/api';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -325,23 +326,15 @@ export default function CommandsPage() {
 
                   {/* Execute Button */}
                   <div className="flex justify-end">
-                    <Button
+                    <MaterialButton
                       onClick={executeCommand}
                       disabled={isExecuting || !command.trim() || !user}
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg"
+                      loading={isExecuting}
+                      variant="primary"
                     >
-                      {isExecuting ? (
-                        <>
-                          <Clock className="w-4 h-4 mr-2 animate-spin" />
-                          Executing...
-                        </>
-                      ) : (
-                        <>
-                          <Play className="w-4 h-4 mr-2" />
-                          Execute Command
-                        </>
-                      )}
-                    </Button>
+                      <Play className="w-4 h-4 mr-2" />
+                      Execute Command
+                    </MaterialButton>
                   </div>
 
                   {/* Alerts */}

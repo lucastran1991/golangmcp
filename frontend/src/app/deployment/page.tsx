@@ -12,6 +12,7 @@ import { metricsAPI, SystemMetrics, RealtimeMetrics } from '@/lib/api';
 import { createMetricsWebSocket } from '@/lib/websocket';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
   Activity, 
@@ -242,15 +243,15 @@ export default function DeploymentPage() {
                     )}
                   </div>
                   
-                  <Button 
+                  <MaterialButton 
                     onClick={refreshMetrics}
                     disabled={loading}
-                    className="group/btn border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                    loading={loading}
+                    variant="info"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                    <RefreshCw className={`h-4 w-4 mr-2 relative ${loading ? 'animate-spin' : ''}`} />
-                    <span className="relative">Refresh</span>
-                  </Button>
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh
+                  </MaterialButton>
                 </div>
               </div>
             </div>
