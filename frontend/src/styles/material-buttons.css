@@ -1,0 +1,304 @@
+/* Material Design Button System - Shadcn Style */
+
+:root {
+  /* Material Design Colors */
+  --md-primary: #1976d2;
+  --md-primary-dark: #1565c0;
+  --md-primary-light: #42a5f5;
+  --md-secondary: #dc004e;
+  --md-secondary-dark: #c2185b;
+  --md-secondary-light: #f48fb1;
+  --md-success: #2e7d32;
+  --md-warning: #f57c00;
+  --md-error: #d32f2f;
+  --md-info: #0288d1;
+  
+  /* Material Design Shadows */
+  --md-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --md-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --md-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --md-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  --md-shadow-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  
+  /* Material Design Transitions */
+  --md-transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --md-transition-fast: all 0.15s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Base Button Styles */
+.btn-material {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--md-transition);
+  overflow: hidden;
+  text-decoration: none;
+  user-select: none;
+  outline: none;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+
+/* Ripple Effect */
+.btn-material::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+}
+
+.btn-material:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Button Variants */
+.btn-material--primary {
+  background-color: var(--md-primary);
+  color: white;
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-material--primary:hover {
+  background-color: var(--md-primary-dark);
+  box-shadow: var(--md-shadow-2);
+  transform: translateY(-1px);
+}
+
+.btn-material--primary:active {
+  transform: translateY(0);
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-material--secondary {
+  background-color: var(--md-secondary);
+  color: white;
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-material--secondary:hover {
+  background-color: var(--md-secondary-dark);
+  box-shadow: var(--md-shadow-2);
+  transform: translateY(-1px);
+}
+
+.btn-material--outlined {
+  background-color: transparent;
+  color: var(--md-primary);
+  border: 1px solid var(--md-primary);
+  box-shadow: none;
+}
+
+.btn-material--outlined:hover {
+  background-color: rgba(25, 118, 210, 0.04);
+  box-shadow: var(--md-shadow-1);
+  transform: translateY(-1px);
+}
+
+.btn-material--text {
+  background-color: transparent;
+  color: var(--md-primary);
+  box-shadow: none;
+  padding: 8px 16px;
+}
+
+.btn-material--text:hover {
+  background-color: rgba(25, 118, 210, 0.04);
+  box-shadow: none;
+}
+
+.btn-material--success {
+  background-color: var(--md-success);
+  color: white;
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-material--success:hover {
+  background-color: #1b5e20;
+  box-shadow: var(--md-shadow-2);
+  transform: translateY(-1px);
+}
+
+.btn-material--warning {
+  background-color: var(--md-warning);
+  color: white;
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-material--warning:hover {
+  background-color: #e65100;
+  box-shadow: var(--md-shadow-2);
+  transform: translateY(-1px);
+}
+
+.btn-material--error {
+  background-color: var(--md-error);
+  color: white;
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-material--error:hover {
+  background-color: #c62828;
+  box-shadow: var(--md-shadow-2);
+  transform: translateY(-1px);
+}
+
+/* Button Sizes */
+.btn-material--small {
+  padding: 8px 16px;
+  font-size: 12px;
+  min-height: 32px;
+}
+
+.btn-material--large {
+  padding: 16px 32px;
+  font-size: 16px;
+  min-height: 48px;
+}
+
+/* Disabled State */
+.btn-material:disabled {
+  background-color: rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.26);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-material:disabled:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Focus State */
+.btn-material:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+/* Icon Buttons */
+.btn-material--icon {
+  padding: 8px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+}
+
+.btn-material--icon.btn-material--small {
+  padding: 4px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.btn-material--icon.btn-material--large {
+  padding: 12px;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+/* Floating Action Button */
+.btn-material--fab {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: var(--md-shadow-3);
+  z-index: 1000;
+}
+
+.btn-material--fab:hover {
+  box-shadow: var(--md-shadow-4);
+  transform: translateY(-2px);
+}
+
+/* Button Groups */
+.btn-group {
+  display: inline-flex;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--md-shadow-1);
+}
+
+.btn-group .btn-material {
+  border-radius: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.btn-group .btn-material:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.btn-group .btn-material:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-right: none;
+}
+
+.btn-group .btn-material:hover {
+  transform: none;
+}
+
+/* Loading State */
+.btn-material--loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn-material--loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .btn-material {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .btn-material--small {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .btn-material--large {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+}

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -194,28 +195,20 @@ export default function LoginPage() {
                 )}
               </div>
 
-              <Button 
+              <MaterialButton 
                 type="submit" 
-                className="group/btn relative w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 overflow-hidden" 
-                disabled={isLoading}
+                variant="primary"
+                size="large"
+                loading={isLoading}
+                className="w-full"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300"></div>
-                {isLoading ? (
+                {isLoading ? 'Signing in...' : (
                   <>
-                    <div className="relative flex items-center justify-center">
-                      <Loader2 className="h-5 w-5 animate-spin mr-3" />
-                      <span className="font-medium">Signing in...</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="relative flex items-center justify-center">
-                      <Star className="h-5 w-5 mr-3 group-hover/btn:animate-pulse" />
-                      <span className="font-medium">Sign in to your account</span>
-                    </div>
+                    <Star className="h-5 w-5" />
+                    Sign in to your account
                   </>
                 )}
-              </Button>
+              </MaterialButton>
             </form>
           </CardContent>
         </Card>

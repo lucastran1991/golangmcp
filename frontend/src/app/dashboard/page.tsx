@@ -7,6 +7,7 @@ import { LayoutWrapper } from '@/components/layout/LayoutWrapper';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { 
   LogOut, 
@@ -107,14 +108,13 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex items-center space-x-4">
                   <SessionStatus showDetails={false} className="hidden sm:flex" />
-                  <Button 
-                    variant="outline" 
+                  <MaterialButton 
+                    variant="error"
                     onClick={handleLogout}
-                    className="border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300"
                   >
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
-                  </Button>
+                  </MaterialButton>
                 </div>
               </div>
             </header>
