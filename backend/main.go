@@ -186,6 +186,62 @@ func main() {
 	r.GET("/api/files/stats", handlers.AuthMiddleware(), handlers.GetFileStatsHandler)
 	r.GET("/api/files/:id/logs", handlers.AuthMiddleware(), handlers.GetFileAccessLogsHandler)
 
+	// Optimized endpoints for better performance
+	optimizedHandlers := handlers.NewOptimizedHandlers()
+	r.GET("/api/optimized/users", handlers.AuthMiddleware(), optimizedHandlers.GetUsersOptimizedHandler)
+	r.GET("/api/optimized/files", handlers.AuthMiddleware(), optimizedHandlers.GetFilesOptimizedHandler)
+	r.GET("/api/optimized/files/search", handlers.AuthMiddleware(), optimizedHandlers.SearchFilesOptimizedHandler)
+	r.GET("/api/optimized/files/stats", handlers.AuthMiddleware(), optimizedHandlers.GetFileStatsOptimizedHandler)
+	r.GET("/api/optimized/files/:id/logs", handlers.AuthMiddleware(), optimizedHandlers.GetFileAccessLogsOptimizedHandler)
+	r.POST("/api/optimized/files/batch-upload", handlers.AuthMiddleware(), optimizedHandlers.BatchUploadFilesHandler)
+	r.GET("/api/optimized/database/stats", handlers.AuthMiddleware(), optimizedHandlers.GetDatabasePerformanceStatsHandler)
+	r.POST("/api/optimized/database/cleanup", handlers.AuthMiddleware(), optimizedHandlers.CleanupOldDataHandler)
+
+	// Command execution endpoints
+	commandHandlers := handlers.NewCommandHandlers()
+	r.POST("/api/commands/execute", handlers.AuthMiddleware(), commandHandlers.ExecuteCommandHandler)
+	r.GET("/api/commands", handlers.AuthMiddleware(), commandHandlers.GetCommandHistoryHandler)
+	r.GET("/api/commands/:id", handlers.AuthMiddleware(), commandHandlers.GetCommandHandler)
+	r.GET("/api/commands/stats", handlers.AuthMiddleware(), commandHandlers.GetCommandStatsHandler)
+	r.GET("/api/commands/whitelist", handlers.AuthMiddleware(), commandHandlers.GetCommandWhitelistHandler)
+	r.POST("/api/commands/whitelist", handlers.AuthMiddleware(), commandHandlers.AddToWhitelistHandler)
+	r.DELETE("/api/commands/whitelist/:command", handlers.AuthMiddleware(), commandHandlers.RemoveFromWhitelistHandler)
+	r.POST("/api/commands/whitelist/initialize", handlers.AuthMiddleware(), commandHandlers.InitializeWhitelistHandler)
+
+	// Image processing endpoints
+	imageHandlers := handlers.NewImageHandlers()
+	r.POST("/api/images/upload", handlers.AuthMiddleware(), imageHandlers.UploadOptimizedImageHandler)
+	r.POST("/api/images/validate", handlers.AuthMiddleware(), imageHandlers.ValidateImageHandler)
+	r.GET("/api/images/stats", handlers.AuthMiddleware(), imageHandlers.GetImageStatsHandler)
+	r.PUT("/api/images/settings", handlers.AuthMiddleware(), imageHandlers.UpdateImageSettingsHandler)
+	r.GET("/api/images/:id", handlers.AuthMiddleware(), imageHandlers.GetImageFileHandler)
+	r.POST("/api/images/batch-optimize", handlers.AuthMiddleware(), imageHandlers.BatchOptimizeImagesHandler)
+
+	// Performance optimization endpoints
+	performanceHandlers := handlers.NewPerformanceHandlers()
+	r.GET("/api/performance/users", handlers.AuthMiddleware(), performanceHandlers.GetUsersWithCacheHandler)
+	r.GET("/api/performance/files", handlers.AuthMiddleware(), performanceHandlers.GetFilesWithCacheHandler)
+	r.GET("/api/performance/cache/stats", handlers.AuthMiddleware(), performanceHandlers.GetCacheStatsHandler)
+	r.POST("/api/performance/cache/clear", handlers.AuthMiddleware(), performanceHandlers.ClearCacheHandler)
+	r.GET("/api/performance/rate-limit/stats", handlers.AuthMiddleware(), performanceHandlers.GetRateLimitStatsHandler)
+	r.GET("/api/performance/rate-limit/configs", handlers.AuthMiddleware(), performanceHandlers.GetRateLimitConfigsHandler)
+	r.PUT("/api/performance/rate-limit/config", handlers.AuthMiddleware(), performanceHandlers.UpdateRateLimitConfigHandler)
+	r.GET("/api/performance/pagination/stats", handlers.AuthMiddleware(), performanceHandlers.GetPaginationStatsHandler)
+	r.GET("/api/performance/test", handlers.AuthMiddleware(), performanceHandlers.PerformanceTestHandler)
+
+	// Security audit logging endpoints
+	auditHandlers := handlers.NewAuditHandlers()
+	r.GET("/api/audit/logs", handlers.AuthMiddleware(), auditHandlers.GetAuditLogsHandler)
+	r.GET("/api/audit/logs/:id", handlers.AuthMiddleware(), auditHandlers.GetAuditLogHandler)
+	r.GET("/api/audit/stats", handlers.AuthMiddleware(), auditHandlers.GetAuditStatsHandler)
+	r.GET("/api/audit/config", handlers.AuthMiddleware(), auditHandlers.GetAuditConfigHandler)
+	r.PUT("/api/audit/config", handlers.AuthMiddleware(), auditHandlers.UpdateAuditConfigHandler)
+	r.POST("/api/audit/cleanup", handlers.AuthMiddleware(), auditHandlers.CleanupAuditLogsHandler)
+	r.GET("/api/audit/events", handlers.AuthMiddleware(), auditHandlers.GetAuditEventsHandler)
+	r.GET("/api/audit/export", handlers.AuthMiddleware(), auditHandlers.ExportAuditLogsHandler)
+	r.GET("/api/audit/alerts", handlers.AuthMiddleware(), auditHandlers.GetSecurityAlertsHandler)
+	r.POST("/api/audit/test", handlers.AuthMiddleware(), auditHandlers.AuditTestHandler)
+
 	// Start server
 	r.Run(":8080")
 }

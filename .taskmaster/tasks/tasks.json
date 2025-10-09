@@ -2,274 +2,424 @@
   "master": {
     "tasks": [
       {
-        "id": "11",
-        "title": "Setup Golang Project Structure and Dependencies",
-        "description": "Create a new Go project using the go mod init command, install required dependencies (e.g., Gin Web Framework, JWT-Go, GORM), and set up the project structure.",
-        "details": "Use the following commands to setup the project: `go mod init`, `go get gin-gonic/gin`, `go get github.com/dgrijalva/jwt-go`, `go get gorm.io/gorm`. Set up the project structure with a main package, models directory for database schema, and controllers directory for API endpoints.",
-        "testStrategy": "Unit tests using Go's built-in testing package to verify dependency installation and project structure setup.",
+        "id": "24",
+        "title": "Implement User Authentication & Authorization",
+        "description": "Secure login/logout functionality with JWT tokens, user registration with validation, session management with cross-tab synchronization, role-based access control (RBAC), and admin user management.",
+        "details": "User model implementation, database setup, authentication service, authorization service, session management, and RBAC.",
+        "testStrategy": "Test the login functionality, test the logout functionality, test the registration functionality, test the session management, and test the RBAC.",
         "priority": "high",
         "dependencies": [],
         "status": "done",
         "subtasks": [],
-        "updatedAt": "2025-10-06T09:44:57.676Z"
+        "updatedAt": "2025-10-09T02:59:42.231Z"
       },
       {
-        "id": "12",
-        "title": "Implement User Model and Database Setup",
-        "description": "Create the User struct with fields for ID, username, password (hashed), role, avatar, created_at, and updated_at. Implement database setup using GORM to create a users table.",
-        "details": "Use the following code as a reference: `type User struct { ... }`. Use GORM's migration feature to create the users table in the database.\n<info added on 2025-10-07T02:15:22.198Z>\nCreate internal/models/user.go\nSetup GORM in internal/db/\nAuto-migrate users in app startup\nAdd unit tests for model and DB init\n</info added on 2025-10-07T02:15:22.198Z>",
-        "testStrategy": "Unit tests using Go's built-in testing package to verify user model and database setup functionality.",
+        "id": "25",
+        "title": "Implement Profile Management",
+        "description": "User information viewing and editing, avatar image upload and management, password change functionality, account settings and preferences, and session management interface.",
+        "details": "Profile edit page, password change page, avatar upload page, account settings page, and session management interface.",
+        "testStrategy": "Test the profile view/edit functionality, test the password change functionality, test the avatar upload functionality, test the account settings functionality, and test the session management interface.",
         "priority": "high",
         "dependencies": [
-          "11"
+          "24"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-09T02:59:46.207Z"
+      },
+      {
+        "id": "26",
+        "title": "Implement Real-time System Monitoring",
+        "description": "Live system metrics dashboard, WebSocket-based real-time data streaming, CPU, memory, disk, and network monitoring, historical metrics visualization with charts, and interactive metric charts.",
+        "details": "Metrics collection service, WebSocket implementation, real-time dashboard, chart visualizations.",
+        "testStrategy": "Test the live system metrics dashboard, test the WebSocket-based real-time data streaming, test the CPU/memory/disk/network monitoring, test the historical metrics visualization with charts, and test the interactive metric charts.",
+        "priority": "high",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-09T02:59:50.677Z"
+      },
+      {
+        "id": "27",
+        "title": "Implement File Management",
+        "description": "File upload handling, file validation, file storage management, file access logging, search, and filtering.",
+        "details": "File upload interface, file listing interface, search functionality, filter functionality.",
+        "testStrategy": "Test the file upload handling, test the file validation, test the file storage management, test the file access logging, test the search functionality, and test the filter functionality.",
+        "priority": "high",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-09T02:59:53.788Z"
+      },
+      {
+        "id": "28",
+        "title": "Implement Advanced Security Features",
+        "description": "CSRF protection, rate limiting, security headers, audit logging.",
+        "details": "CSRF protection implementation, rate limiting implementation, security headers implementation, and audit logging implementation.",
+        "testStrategy": "Test the CSRF protection, test the rate limiting, test the security headers, and test the audit logging.",
+        "priority": "high",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-09T02:59:57.414Z"
+      },
+      {
+        "id": "29",
+        "title": "Implement Session Management",
+        "description": "Multi-device tracking, cross-tab synchronization, session invalidation.",
+        "details": "Session management implementation, multi-device tracking implementation, and cross-tab synchronization implementation.",
+        "testStrategy": "Test the multi-device tracking, test the cross-tab synchronization, and test the session invalidation.",
+        "priority": "high",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-09T03:00:00.472Z"
+      },
+      {
+        "id": "30",
+        "title": "Implement Real-time Metrics",
+        "description": "WebSocket connections with fallback polling.",
+        "details": "WebSocket implementation, real-time data streaming.",
+        "testStrategy": "Test the WebSocket connections and test the real-time data streaming.",
+        "priority": "high",
+        "dependencies": [
+          "26"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-10-09T03:00:03.617Z"
+      },
+      {
+        "id": "31",
+        "title": "Implement Database Performance Optimization",
+        "description": "Proper indexing, soft deletes, query optimization.",
+        "details": "Database performance optimization implementation, proper indexing, soft deletes, and query optimization.",
+        "testStrategy": "Test the database performance, test the indexing, test the soft deletes, and test the query optimization.",
+        "priority": "medium",
+        "dependencies": [
+          "25"
         ],
         "status": "done",
         "subtasks": [
           {
             "id": 1,
-            "title": "Define User Struct Fields",
-            "description": "Create the User struct with fields for ID, username, password (hashed), role, avatar, created_at, and updated_at.",
+            "title": "Optimize Database Queries",
+            "description": "Implement query optimization for database performance enhancement.",
             "dependencies": [],
-            "details": "Use the following code as a reference: `type User struct { ... }`.",
+            "details": "Query analysis and restructuring to improve performance.",
             "status": "done",
-            "testStrategy": "",
+            "testStrategy": "Test the optimized queries against the original ones.",
             "parentId": "undefined",
-            "updatedAt": "2025-10-06T09:50:30.175Z"
+            "updatedAt": "2025-10-09T03:07:35.242Z"
           },
           {
             "id": 2,
-            "title": "Implement GORM Database Setup",
-            "description": "Use GORM's migration feature to create the users table in the database.",
-            "dependencies": [
-              "12.1"
-            ],
-            "details": "Use the following code as a reference: `func Migrate() { ... }`.",
+            "title": "Create Database Indexes",
+            "description": "Add indexes to database tables for improved query performance.",
+            "dependencies": [],
+            "details": "Indexing strategy planning and implementation.",
             "status": "done",
-            "testStrategy": "",
+            "testStrategy": "Test the execution speed of queries with and without indexes.",
             "parentId": "undefined",
-            "updatedAt": "2025-10-07T07:45:24.077Z"
+            "updatedAt": "2025-10-09T03:07:38.602Z"
           },
           {
             "id": 3,
-            "title": "Implement User Model Methods",
-            "description": "Add methods to the User struct for common operations such as Get, Create, Update, and Delete.",
-            "dependencies": [
-              "12.2"
-            ],
-            "details": "Use the following code as a reference: `func (u *User) Save() { ... }`.",
+            "title": "Implement Soft Deletes",
+            "description": "Design a mechanism to mark deleted records as such instead of physically deleting them.",
+            "dependencies": [],
+            "details": "Database structure modification and query adjustments for soft deletion implementation.",
             "status": "done",
-            "testStrategy": "",
+            "testStrategy": "Test the soft delete functionality and verify data recovery.",
             "parentId": "undefined",
-            "updatedAt": "2025-10-07T08:13:47.405Z"
+            "updatedAt": "2025-10-09T03:07:41.993Z"
           },
           {
             "id": 4,
-            "title": "Implement User Validation",
-            "description": "Add validation to ensure that user input is valid and consistent with the database schema.",
+            "title": "Integrate Command Execution with Database Optimization",
+            "description": "Combine Task #31 (Implement Database Performance Optimization) enhancements into the command execution service.",
             "dependencies": [
-              "12.3"
+              1,
+              2,
+              3
             ],
-            "details": "Use the following code as a reference: `func ValidateUser(u *User) { ... }`.",
+            "details": "Modify and optimize database queries in the command execution service.",
             "status": "done",
-            "testStrategy": "",
+            "testStrategy": "Test the optimized command execution with enhanced database queries.",
             "parentId": "undefined",
-            "updatedAt": "2025-10-07T08:14:51.880Z"
+            "updatedAt": "2025-10-09T03:10:11.550Z"
           },
           {
             "id": 5,
-            "title": "Test User Model and Database Setup",
-            "description": "Write unit tests to verify that the user model and database setup are functioning correctly.",
+            "title": "Integrate Database Optimization with Command Management System",
+            "description": "Combine the optimized command execution service from Task #4 into the overall command management system.",
             "dependencies": [
-              "12.4"
+              4
             ],
-            "details": "Use Go's built-in testing package to write unit tests.",
+            "details": "Incorporate optimized command execution service into the complete system.",
             "status": "done",
-            "testStrategy": "Unit tests",
+            "testStrategy": "Test the entire command management system with optimized database queries.",
             "parentId": "undefined",
-            "updatedAt": "2025-10-07T08:20:56.197Z"
+            "updatedAt": "2025-10-09T03:10:14.408Z"
           }
         ],
-        "updatedAt": "2025-10-07T08:20:56.197Z"
+        "updatedAt": "2025-10-09T03:10:14.408Z"
       },
       {
-        "id": "13",
-        "title": "Implement Basic Authentication Endpoints",
-        "description": "Create API endpoints for user registration, login, and logout using Gin Web Framework. Implement JWT token generation and validation.",
-        "details": "Use the following code as a reference: `func Register(c *gin.Context) { ... }`. Use JWT-Go to generate and validate tokens.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify authentication endpoint functionality.",
-        "priority": "high",
+        "id": "32",
+        "title": "Implement Image Storage Optimization",
+        "description": "File size limits, file compression.",
+        "details": "Image storage implementation, file size limits, and file compression.",
+        "testStrategy": "Test the file size limits, test the file compression.",
+        "priority": "medium",
         "dependencies": [
-          "12"
+          "27"
         ],
         "status": "done",
         "subtasks": [
           {
             "id": 1,
-            "title": "Create Register Endpoint",
-            "description": "Implement user registration API endpoint using Gin Web Framework.",
+            "title": "Research existing image compression algorithms",
+            "description": "Explore suitable image compression techniques for the application.",
             "dependencies": [],
-            "details": "Use the following code as a reference: `func Register(c *gin.Context) { ... }`. Use JWT-Go to generate and validate tokens.",
+            "details": "Review various image compression methods and their performance characteristics.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:12:31.482Z"
+          },
+          {
+            "id": 2,
+            "title": "Integrate selected image compression algorithm with storage implementation",
+            "description": "Implement the chosen image compression algorithm for file size optimization.",
+            "dependencies": [
+              1
+            ],
+            "details": "Modify the existing image storage implementation to include the chosen image compression algorithm.",
+            "status": "done",
+            "testStrategy": "Test the compressed images against original images for quality loss and verify the reduced file sizes.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:12:34.654Z"
+          },
+          {
+            "id": 3,
+            "title": "Set up file size limits for uploaded images",
+            "description": "Implement a mechanism to limit the maximum file size of uploaded images.",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a system that checks and enforces image file size limitations during the upload process.",
+            "status": "done",
+            "testStrategy": "Test various scenarios to ensure that the image file size limits are properly implemented and enforced.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:12:38.171Z"
+          },
+          {
+            "id": 4,
+            "title": "Develop a system for monitoring and reporting image file sizes",
+            "description": "Create a monitoring system for tracking the file sizes of uploaded images.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement a mechanism to record, store, and analyze the file sizes of uploaded images.",
+            "status": "done",
+            "testStrategy": "Test the monitoring and reporting functionality by uploading images with different sizes and verifying that the data is accurately recorded and analyzed.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:12:41.185Z"
+          },
+          {
+            "id": 5,
+            "title": "Integrate image file size monitoring with Task #27 (Implement File Management)",
+            "description": "Connect the image file size monitoring system with the existing file management implementation.",
+            "dependencies": [
+              4
+            ],
+            "details": "Combine the monitoring system with the file management to provide a comprehensive solution for managing images.",
+            "status": "done",
+            "testStrategy": "Test the integration by uploading and monitoring multiple images, ensuring that the image file sizes are correctly tracked and displayed.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:12:45.064Z"
+          }
+        ],
+        "updatedAt": "2025-10-09T03:12:45.064Z"
+      },
+      {
+        "id": "33",
+        "title": "Implement API Performance Optimization",
+        "description": "Caching, pagination, rate limiting.",
+        "details": "API performance implementation, caching, and rate limiting.",
+        "testStrategy": "Test the caching, test the rate limiting.",
+        "priority": "medium",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Caching Mechanism",
+            "description": "Cache API responses to reduce the load on the server.",
+            "dependencies": [],
+            "details": "Design and implement a caching system for the API.",
+            "status": "done",
+            "testStrategy": "Test the caching mechanism by checking if cached data is returned when appropriate.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:16:03.606Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Pagination",
+            "description": "Divide API responses into smaller, manageable chunks.",
+            "dependencies": [],
+            "details": "Create pagination for API requests to improve performance.",
+            "status": "done",
+            "testStrategy": "Test the pagination implementation by checking if data is returned in correct pages.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:16:07.102Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement Rate Limiting",
+            "description": "Limit API requests to prevent abuse and overload.",
+            "dependencies": [],
+            "details": "Create a rate limiting system for the API.",
+            "status": "done",
+            "testStrategy": "Test the rate limiting mechanism by sending multiple API requests and verifying if the limit is enforced.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:16:13.961Z"
+          },
+          {
+            "id": 4,
+            "title": "Integrate Command Management System with API",
+            "description": "Connect the command management system to the API for execution.",
+            "dependencies": [
+              3,
+              3
+            ],
+            "details": "Make necessary adjustments in the API and command management system for seamless integration.",
+            "status": "done",
+            "testStrategy": "Test the integration by executing commands through the command management system and verifying their execution in the API.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:16:17.885Z"
+          },
+          {
+            "id": 5,
+            "title": "Optimize Database Queries for Command Execution",
+            "description": "Optimize database queries related to command execution.",
+            "dependencies": [
+              3
+            ],
+            "details": "Analyze and optimize the database queries used in the command execution service.",
+            "status": "done",
+            "testStrategy": "Test the optimized database queries by comparing their performance with the original queries.",
+            "parentId": "undefined",
+            "updatedAt": "2025-10-09T03:16:21.982Z"
+          }
+        ],
+        "updatedAt": "2025-10-09T03:16:21.982Z"
+      },
+      {
+        "id": "34",
+        "title": "Implement Security Audit Logging",
+        "description": "Audit logging of security-related events.",
+        "details": "Security audit logging implementation and configuration.",
+        "testStrategy": "Test the audit logging functionality.",
+        "priority": "low",
+        "dependencies": [
+          "25"
+        ],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Research Security Audit Logging Implementation Options",
+            "description": "Investigate various approaches for security audit logging implementation.",
+            "dependencies": [],
+            "details": "Evaluate open-source libraries and custom solutions for implementing security audit logging.",
             "status": "pending",
-            "testStrategy": "Integration tests using Go's built-in testing package",
+            "testStrategy": null,
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Design Security Audit Log Schema",
+            "description": "Create a schema for the security audit log data to be stored.",
+            "dependencies": [
+              1
+            ],
+            "details": "Define fields and structure for security audit logs.",
+            "status": "pending",
+            "testStrategy": null,
+            "parentId": "undefined"
+          },
+          {
+            "id": 3,
+            "title": "Integrate Security Audit Logging with Existing System",
+            "description": "Connect the designed audit logging system to the application.",
+            "dependencies": [
+              2
+            ],
+            "details": "Configure the security audit logging implementation and integrate it into the existing system.",
+            "status": "pending",
+            "testStrategy": null,
             "parentId": "undefined"
           },
           {
             "id": 4,
-            "title": "Create Profile View Endpoint",
-            "description": "Implement user profile viewing API endpoint using Gin Web Framework.",
-            "dependencies": [],
-            "details": "Use the following code as a reference: `func GetProfile(c *gin.Context) { ... }`. Use GORM to interact with the database and implement role-based access control using Gin's built-in middleware.",
+            "title": "Test Security Audit Logging Functionality",
+            "description": "Verify that the implemented audit logging is working as expected.",
+            "dependencies": [
+              3
+            ],
+            "details": "Run tests to ensure that security events are being logged correctly.",
             "status": "pending",
-            "testStrategy": "Integration tests using Go's built-in testing package",
+            "testStrategy": null,
+            "parentId": "undefined"
+          },
+          {
+            "id": 5,
+            "title": "Set Up Audit Log Monitoring and Alerts",
+            "description": "Configure monitoring and alert systems for audit logs.",
+            "dependencies": [
+              4
+            ],
+            "details": "Create rules for alerting on suspicious or critical events in the security audit log.",
+            "status": "pending",
+            "testStrategy": null,
             "parentId": "undefined"
           }
         ],
-        "updatedAt": "2025-10-07T08:25:35.623Z"
+        "updatedAt": "2025-10-09T03:17:02.902Z"
       },
       {
-        "id": "14",
-        "title": "Implement Profile Management Endpoints",
-        "description": "Create API endpoints for user profile viewing and editing, including avatar upload. Implement role-based access control.",
-        "details": "Use the following code as a reference: `func GetProfile(c *gin.Context) { ... }`. Use GORM to interact with the database and implement role-based access control using Gin's built-in middleware.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify profile management endpoint functionality.",
-        "priority": "high",
-        "dependencies": [
-          "13"
-        ],
+        "id": "35",
+        "title": "Implement Command Management System",
+        "description": "Implement a command management system with backend command execution service, frontend terminal-like interface component, security command whitelist and user permission checks, and real-time WebSocket for live command output streaming.",
+        "details": "The implementation will involve the following steps:\n\n1. Develop the backend command execution service with security validation, using Task #31 (Implement Database Performance Optimization) to optimize database queries and Task #26 (Implement Real-time System Monitoring) to monitor system metrics.\n\n2. Create the frontend terminal-like interface component, integrating it with the backend service developed in step 1.\n\n3. Implement a security command whitelist and user permission checks, utilizing the authentication and authorization mechanisms established in Task #24 (Implement User Authentication & Authorization).\n\n4. Integrate real-time WebSocket for live command output streaming, leveraging the WebSocket connections established in Task #30 (Implement Real-time Metrics).\n\n5. Perform thorough testing to ensure secure command execution, proper user permission checks, and accurate command logging.",
+        "testStrategy": "Test the following aspects:\n\n1. Command execution: Test that commands are executed correctly without security breaches.\n\n2. Security validation: Verify that the command whitelist and user permission checks function as intended.\n\n3. Real-time WebSocket: Ensure live command output streaming is accurate and secure.\n\n4. Logging and audit: Confirm proper logging and auditing of commands, including system metrics collected in Task #26.",
         "status": "done",
-        "subtasks": [],
-        "updatedAt": "2025-10-07T08:27:07.757Z"
-      },
-      {
-        "id": "15",
-        "title": "Implement Avatar Upload and Storage",
-        "description": "Create a service for avatar upload and storage. Implement file size limits and optimization.",
-        "details": "Use the following code as a reference: `func UploadAvatar(c *gin.Context) { ... }`. Use a library like Multer to handle file uploads and implement file size limits using Gin's built-in middleware.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify avatar upload and storage functionality.",
+        "dependencies": [
+          "24",
+          "31"
+        ],
         "priority": "medium",
-        "dependencies": [
-          "14"
-        ],
-        "status": "done",
         "subtasks": [],
-        "updatedAt": "2025-10-07T08:28:36.181Z"
-      },
-      {
-        "id": "16",
-        "title": "Implement Session Management",
-        "description": "Create a service for session management. Implement JWT token refresh and validation.",
-        "details": "Use the following code as a reference: `func RefreshToken(c *gin.Context) { ... }`. Use JWT-Go to generate and validate tokens.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify session management functionality.",
-        "priority": "medium",
-        "dependencies": [
-          "13"
-        ],
-        "status": "done",
-        "subtasks": [],
-        "updatedAt": "2025-10-07T08:32:30.954Z"
-      },
-      {
-        "id": "17",
-        "title": "Implement Role-Based Authorization",
-        "description": "Create a middleware for role-based authorization. Implement access control using Gin's built-in middleware.",
-        "details": "Use the following code as a reference: `func Authorize(c *gin.Context) { ... }`. Use GORM to interact with the database and implement role-based access control using Gin's built-in middleware.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify role-based authorization functionality.",
-        "priority": "medium",
-        "dependencies": [
-          "14"
-        ],
-        "status": "done",
-        "subtasks": [],
-        "updatedAt": "2025-10-07T08:34:31.769Z"
-      },
-      {
-        "id": "18",
-        "title": "Implement UI/UX Improvements",
-        "description": "Create a service for UI/UX improvements. Implement error handling and loading states.",
-        "details": "Use the following code as a reference: `func HandleError(c *gin.Context) { ... }`. Use NextJS's built-in features to implement error handling and loading states.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify UI/UX improvements functionality.",
-        "priority": "low",
-        "dependencies": [
-          "14"
-        ],
-        "status": "done",
-        "subtasks": [],
-        "updatedAt": "2025-10-07T08:35:52.391Z"
-      },
-      {
-        "id": "19",
-        "title": "Implement Secure File Upload Handling",
-        "description": "Create a service for secure file upload handling. Implement strict file validation and use secure storage.",
-        "details": "Use the following code as a reference: `func UploadFile(c *gin.Context) { ... }`. Use a library like Multer to handle file uploads and implement strict file validation using Gin's built-in middleware.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify secure file upload handling functionality.",
-        "priority": "medium",
-        "dependencies": [
-          "15"
-        ],
-        "status": "done",
-        "subtasks": [],
-        "updatedAt": "2025-10-07T08:38:21.592Z"
-      },
-      {
-        "id": "20",
-        "title": "Implement API Security Features",
-        "description": "Create a service for API security features. Implement rate limiting and CORS.",
-        "details": "Use the following code as a reference: `func RateLimit(c *gin.Context) { ... }`. Use Gin's built-in middleware to implement rate limiting and CORS.",
-        "testStrategy": "Integration tests using Go's built-in testing package to verify API security features functionality.",
-        "priority": "medium",
-        "dependencies": [
-          "16"
-        ],
-        "status": "done",
-        "subtasks": [],
-        "updatedAt": "2025-10-07T08:43:31.087Z"
-      },
-      {
-        "id": "21",
-        "title": "Implement Left Menu Navigation",
-        "description": "Create a left menu navigation with three main sections: Dashboard, Deployment, and File Manager.",
-        "details": "Implement a responsive left menu using NextJS components. Ensure proper routing and active state handling for each section. Use a UI library like Material-UI or Tailwind CSS for consistent styling.",
-        "testStrategy": "Unit tests for component rendering and integration tests for navigation functionality.",
-        "priority": "high",
-        "dependencies": [],
-        "status": "pending",
-        "subtasks": [],
-        "updatedAt": "2025-10-08T10:00:00.000Z"
-      },
-      {
-        "id": "22",
-        "title": "Implement System Metrics Dashboard",
-        "description": "Create a deployment monitoring page displaying real-time system metrics including CPU and memory usage.",
-        "details": "Use a monitoring library to fetch system metrics. Implement real-time updates using WebSocket connections. Display metrics using interactive charts and graphs. Consider using libraries like Chart.js or D3.js for visualization.",
-        "testStrategy": "Integration tests for metric collection and display functionality. Unit tests for individual metric components.",
-        "priority": "medium",
-        "dependencies": [
-          "21"
-        ],
-        "status": "pending",
-        "subtasks": [],
-        "updatedAt": "2025-10-08T10:00:00.000Z"
-      },
-      {
-        "id": "23",
-        "title": "Implement File Manager with Upload Functionality",
-        "description": "Create a file manager page with upload capabilities supporting TXT, XLSX, and CSV file formats.",
-        "details": "Implement file upload functionality with strict validation for allowed file types (TXT, XLSX, CSV). Create an independent storage system for uploaded files. Add file listing and management features. Implement proper error handling and progress indicators.",
-        "testStrategy": "Integration tests for file upload process, validation tests for file types, unit tests for component rendering.",
-        "priority": "medium",
-        "dependencies": [
-          "21"
-        ],
-        "status": "pending",
-        "subtasks": [],
-        "updatedAt": "2025-10-08T10:00:00.000Z"
+        "updatedAt": "2025-10-09T03:16:37.462Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-10-08T10:00:00.000Z",
-      "taskCount": 23,
-      "completedCount": 19,
+      "lastModified": "2025-10-09T03:17:02.903Z",
+      "taskCount": 12,
+      "completedCount": 11,
       "tags": [
         "master"
       ]

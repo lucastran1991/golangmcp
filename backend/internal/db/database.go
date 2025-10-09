@@ -30,6 +30,12 @@ func InitDatabase(dsn string) error {
 		return fmt.Errorf("failed to migrate database: %w", err)
 	}
 
+	// Optimize database performance
+	err = OptimizeDatabase()
+	if err != nil {
+		log.Printf("Warning: Database optimization failed: %v", err)
+	}
+
 	log.Println("Database connected and migrated successfully")
 	return nil
 }
@@ -41,7 +47,16 @@ func AutoMigrate() error {
 		&models.File{},
 		&models.FileMetadata{},
 		&models.FileAccessLog{},
+		&models.Command{},
+		&models.CommandWhitelist{},
+		&models.SecurityAuditLog{},
 	)
+}
+
+// OptimizeDatabase performs database optimization
+func OptimizeDatabase() error {
+	optimizer := models.NewDatabaseOptimizer(DB)
+	return optimizer.OptimizeDatabase()
 }
 
 // CloseDatabase closes the database connection

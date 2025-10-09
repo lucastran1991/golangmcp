@@ -1,0 +1,484 @@
+<context>
+# Overview
+A comprehensive full-stack user management and system monitoring platform built with Golang backend and NextJS frontend. The system provides secure user authentication, profile management, real-time system monitoring, file management, and advanced security features.
+
+# Core Features
+1. User Authentication & Authorization ✅
+  - Secure login/logout functionality with JWT tokens
+  - User registration with validation
+  - Session management with cross-tab synchronization
+  - Role-based access control (RBAC)
+  - Admin user management
+
+2. Profile Management ✅
+  - User information viewing and editing
+  - Avatar image upload and management
+  - Password change functionality
+  - Account settings and preferences
+  - Session management interface
+
+3. Real-time System Monitoring ✅
+  - Live system metrics dashboard
+  - WebSocket-based real-time data streaming
+  - CPU, memory, disk, and network monitoring
+  - Historical metrics visualization with charts
+  - Interactive metric charts (CPU, Memory, Disk, Network)
+
+4. File Management System ✅
+  - Drag-and-drop file upload
+  - File type validation (TXT, XLSX, CSV)
+  - File metadata management
+  - Search and filtering capabilities
+  - File download and deletion
+  - File access logging and statistics
+
+5. Advanced Security Features ✅
+  - CSRF protection
+  - Rate limiting (120 requests/minute)
+  - Security headers middleware
+  - Input sanitization
+  - Audit logging
+  - Request size limiting
+  - IP whitelisting capabilities
+
+6. Session Management ✅
+  - Multi-device session tracking
+  - Session invalidation
+  - Cross-tab synchronization
+  - Session statistics and monitoring
+  - Admin session management
+
+7. Responsive UI/UX ✅
+  - Modern glass-morphism design
+  - Responsive sidebar navigation
+  - Animated particles and effects
+  - Loading states and error handling
+  - Mobile-friendly interface
+
+# User Experience
+- User Personas:
+  * New users needing to register and setup profiles
+  * Existing users managing their profiles and settings
+  * Users requiring secure authentication and session management
+  * System administrators monitoring system metrics
+  * File managers uploading and organizing documents
+  * Users accessing real-time system monitoring dashboards
+
+- Key User Flows:
+  * Registration → Email Verification → Profile Setup → Dashboard Access
+  * Login → Dashboard → Profile Management → Settings Configuration
+  * Dashboard → System Metrics → Real-time Monitoring → Historical Analysis
+  * File Management → Upload → Search → Download/Delete → Access Logs
+  * Profile Access → Avatar Upload → Password Change → Session Management
+  * Admin Panel → User Management → Role Assignment → Security Monitoring
+
+- UI/UX Considerations:
+  * Clean, modern interface using Shadcn components
+  * Responsive design for all devices
+  * Intuitive navigation and form handling
+</context>
+<PRD>
+# Technical Architecture
+
+## Backend (Golang) ✅
+- Components:
+  * User Authentication Service (JWT-based)
+  * Profile Management Service
+  * File Upload & Management Service
+  * System Metrics Collection Service
+  * WebSocket Hub for Real-time Data
+  * Session Management Service
+  * Security Middleware Suite
+  * Role-Based Access Control (RBAC)
+  * Admin Management Services
+
+- Data Models:
+  ```go
+  type User struct {
+    ID        uint      `json:"id"`
+    Username  string    `json:"username"`
+    Email     string    `json:"email"`
+    Password  string    `json:"-"`
+    Role      string    `json:"role"`
+    Avatar    string    `json:"avatar"`
+    CreatedAt time.Time `json:"created_at"`
+    UpdatedAt time.Time `json:"updated_at"`
+  }
+
+  type File struct {
+    ID          uint      `json:"id"`
+    Filename    string    `json:"filename"`
+    OriginalName string   `json:"original_name"`
+    FileType    string    `json:"file_type"`
+    MimeType    string    `json:"mime_type"`
+    Size        int64     `json:"size"`
+    Path        string    `json:"path"`
+    Hash        string    `json:"hash"`
+    UserID      uint      `json:"user_id"`
+    User        User      `json:"user"`
+    IsPublic    bool      `json:"is_public"`
+    Description string    `json:"description"`
+    Tags        string    `json:"tags"`
+    CreatedAt   time.Time `json:"created_at"`
+    UpdatedAt   time.Time `json:"updated_at"`
+  }
+
+  type FileMetadata struct {
+    ID        uint      `json:"id"`
+    FileID    uint      `json:"file_id"`
+    File      File      `json:"file"`
+    Key       string    `json:"key"`
+    Value     string    `json:"value"`
+    CreatedAt time.Time `json:"created_at"`
+    UpdatedAt time.Time `json:"updated_at"`
+  }
+
+  type FileAccessLog struct {
+    ID        uint      `json:"id"`
+    FileID    uint      `json:"file_id"`
+    File      File      `json:"file"`
+    UserID    uint      `json:"user_id"`
+    User      User      `json:"user"`
+    Action    string    `json:"action"`
+    IPAddress string    `json:"ip_address"`
+    UserAgent string    `json:"user_agent"`
+    CreatedAt time.Time `json:"created_at"`
+  }
+  ```
+
+- APIs:
+  **Authentication & Authorization:**
+  * POST /register - User registration
+  * POST /login - User login with JWT
+  * POST /logout - User logout with session invalidation
+  * GET /protected - Protected endpoint example
+  
+  **Profile Management:**
+  * GET /profile - Get user profile
+  * PUT /profile - Update user profile
+  * POST /profile/change-password - Change password
+  * POST /profile/avatar - Upload avatar
+  * DELETE /profile/avatar - Delete avatar
+  * GET /uploads/avatars/:filename - Serve avatar files
+  
+  **Session Management:**
+  * GET /sessions - Get user sessions
+  * DELETE /sessions/:sessionId - Invalidate specific session
+  * DELETE /sessions - Invalidate all user sessions
+  * GET /admin/sessions - Admin: Get all sessions
+  * GET /admin/sessions/stats - Admin: Session statistics
+  * DELETE /admin/sessions/user/:userId - Admin: Invalidate user sessions
+  
+  **Role-Based Access Control:**
+  * GET /roles - Get available roles
+  * GET /permissions - Get available permissions
+  * GET /user/permissions - Get user permissions
+  * GET /check-permission - Check specific permission
+  * GET /check-access - Check resource access
+  * POST /admin/users/:userId/role - Admin: Assign role
+  * POST /admin/users/bulk-role - Admin: Bulk role assignment
+  * GET /admin/rbac/stats - Admin: RBAC statistics
+  
+  **User Management:**
+  * GET /users - Get all users
+  * GET /admin/users/:id - Admin: Get user profile
+  * PUT /admin/users/:id - Admin: Update user profile
+  * DELETE /admin/users/:id - Admin: Delete user
+  
+  **Security Features:**
+  * GET /security/status - Security status
+  * GET /security/csrf-token - Get CSRF token
+  * POST /security/validate-csrf - Validate CSRF token
+  * GET /security/rate-limit-status - Rate limit status
+  * GET /security/headers - Security headers info
+  * GET /security/test - Test security features
+  * GET /security/metrics - Admin: Security metrics
+  * PUT /admin/security/config - Admin: Update security config
+  * GET /admin/security/logs - Admin: Security logs
+  
+  **System Metrics:**
+  * GET /api/metrics/system - System metrics overview
+  * GET /api/metrics/cpu - CPU metrics
+  * GET /api/metrics/memory - Memory metrics
+  * GET /api/metrics/disk - Disk metrics
+  * GET /api/metrics/network - Network metrics
+  * GET /api/metrics/history - Historical metrics
+  * GET /api/metrics/config - Metrics configuration
+  * GET /ws/metrics - WebSocket real-time metrics
+  
+  **File Management:**
+  * GET /api/files - List files with search/filter
+  * GET /api/files/:id - Get file details
+  * POST /api/files/upload - Upload file
+  * GET /api/files/:id/download - Download file
+  * DELETE /api/files/:id - Delete file
+  * GET /api/files/stats - File statistics
+  * GET /api/files/:id/logs - File access logs
+  
+  **Secure File Upload:**
+  * POST /upload/:fileType - Secure file upload
+  * GET /upload/stats - Upload statistics
+  * POST /scan/:fileId - Scan uploaded file
+  * GET /admin/uploads/stats - Admin: Upload statistics
+  
+  **System Info:**
+  * GET / - API information
+  * GET /api - API documentation
+  * GET /health - Health check
+  * GET /stats - System statistics
+
+## Frontend (NextJS) ✅
+- Components:
+  **Authentication & Authorization:**
+  * Login page with form validation
+  * Registration page with validation
+  * Protected route wrapper
+  * AuthContext for state management
+  
+  **Profile Management:**
+  * Dashboard with user overview
+  * Profile edit page
+  * Password change page
+  * Avatar upload page with drag-and-drop
+  * Account settings page
+  
+  **System Monitoring:**
+  * Real-time metrics dashboard
+  * CPU usage chart component
+  * Memory usage chart component
+  * Disk usage chart component
+  * Network I/O chart component
+  * WebSocket client for live data
+  
+  **File Management:**
+  * File upload component with drag-and-drop
+  * File list component with search/filter
+  * File management interface
+  * File statistics display
+  
+  **Navigation & Layout:**
+  * Responsive sidebar navigation
+  * Layout wrapper component
+  * Navigation context for state management
+  * Mobile-responsive design
+  
+  **UI Components:**
+  * Session status component
+  * Loading states and error handling
+  * Glass-morphism design elements
+  * Animated particles and effects
+  * Modern gradient styling
+
+- State Management:
+  * JWT token storage (localStorage + sessionStorage)
+  * User context with authentication state
+  * Session management with cross-tab sync
+  * Navigation state management
+  * Form state handling
+  * Real-time metrics state
+
+# Development Roadmap
+
+## Phase 1: Foundation ✅ COMPLETED
+- Backend:
+  * User model and database setup ✅
+  * Basic authentication endpoints ✅
+  * JWT implementation ✅
+  * Database migrations ✅
+
+- Frontend:
+  * Project setup with NextJS and Shadcn ✅
+  * Basic routing ✅
+  * Authentication pages structure ✅
+
+## Phase 2: Core Features ✅ COMPLETED
+- Backend:
+  * Profile management endpoints ✅
+  * File upload handling ✅
+  * Session management ✅
+  * Avatar upload system ✅
+
+- Frontend:
+  * Login/Register forms ✅
+  * Profile view/edit page ✅
+  * Avatar upload component ✅
+  * Dashboard interface ✅
+
+## Phase 3: Enhancement ✅ COMPLETED
+- Backend:
+  * Role-based authorization ✅
+  * API rate limiting ✅
+  * Enhanced security features ✅
+  * Security middleware suite ✅
+
+- Frontend:
+  * UI/UX improvements ✅
+  * Error handling ✅
+  * Loading states ✅
+  * Responsive design ✅
+
+## Phase 4: System Monitoring ✅ COMPLETED
+- Backend:
+  * System metrics collection ✅
+  * WebSocket implementation ✅
+  * Real-time data streaming ✅
+  * Metrics API endpoints ✅
+
+- Frontend:
+  * Metrics dashboard ✅
+  * Real-time charts ✅
+  * WebSocket client ✅
+  * Interactive visualizations ✅
+
+## Phase 5: File Management ✅ COMPLETED
+- Backend:
+  * File upload handling ✅
+  * File validation ✅
+  * File storage management ✅
+  * File access logging ✅
+
+- Frontend:
+  * File upload interface ✅
+  * File listing and management ✅
+  * Search and filtering ✅
+  * Drag-and-drop functionality ✅
+
+## Phase 6: Advanced Features ✅ COMPLETED
+- Backend:
+  * Session management system ✅
+  * Admin panel functionality ✅
+  * Security audit logging ✅
+  * Cross-tab synchronization ✅
+
+- Frontend:
+  * Session management interface ✅
+  * Admin user management ✅
+  * Security monitoring ✅
+  * Advanced UI/UX effects ✅
+
+# Logical Dependency Chain ✅ COMPLETED
+1. Backend Foundation ✅
+  - Database setup ✅
+  - User model implementation ✅
+  - Basic API structure ✅
+  - Security middleware ✅
+
+2. Frontend Foundation ✅
+  - Project setup ✅
+  - Routing configuration ✅
+  - Basic components ✅
+  - UI framework integration ✅
+
+3. Authentication Flow ✅
+  - Backend authentication ✅
+  - Frontend integration ✅
+  - Session management ✅
+  - JWT token handling ✅
+
+4. Profile Management ✅
+  - Backend profile endpoints ✅
+  - Frontend profile pages ✅
+  - Avatar upload functionality ✅
+  - Password management ✅
+
+5. System Monitoring ✅
+  - Metrics collection service ✅
+  - WebSocket implementation ✅
+  - Real-time dashboard ✅
+  - Chart visualizations ✅
+
+6. File Management ✅
+  - File upload system ✅
+  - File storage management ✅
+  - File listing interface ✅
+  - Search and filtering ✅
+
+7. Advanced Security ✅
+  - CSRF protection ✅
+  - Rate limiting ✅
+  - Security headers ✅
+  - Audit logging ✅
+
+8. Session Management ✅
+  - Multi-device tracking ✅
+  - Cross-tab synchronization ✅
+  - Session invalidation ✅
+  - Admin management ✅
+
+# Risks and Mitigations ✅ ADDRESSED
+
+## Technical Challenges ✅ RESOLVED
+- Secure file upload handling ✅
+  * Mitigation: Implemented strict file validation, type checking, and secure storage
+- JWT token management ✅
+  * Mitigation: Implemented proper token refresh, validation, and session management
+- Real-time data streaming ✅
+  * Mitigation: Implemented WebSocket connections with fallback polling
+- Cross-tab synchronization ✅
+  * Mitigation: Implemented localStorage/sessionStorage with event system
+
+## Security Considerations ✅ IMPLEMENTED
+- Password security ✅
+  * Mitigation: Implemented bcrypt hashing and strong validation
+- API security ✅
+  * Mitigation: Implemented rate limiting (120 req/min), CORS, CSRF protection
+- File upload security ✅
+  * Mitigation: Implemented file type validation, size limits, and access logging
+- Session security ✅
+  * Mitigation: Implemented session tracking, invalidation, and admin controls
+
+## Resource Management ✅ OPTIMIZED
+- Image storage ✅
+  * Mitigation: Implemented file size limits, optimization, and cleanup
+- API performance ✅
+  * Mitigation: Implemented caching, pagination, and rate limiting
+- Real-time metrics ✅
+  * Mitigation: Implemented efficient WebSocket connections and data compression
+- Database performance ✅
+  * Mitigation: Implemented proper indexing, soft deletes, and query optimization
+
+# Appendix
+
+## Technical Stack ✅ IMPLEMENTED
+- Backend:
+  * Go 1.21+ ✅
+  * JWT-Go for authentication ✅
+  * GORM for database ORM ✅
+  * Gin Web Framework ✅
+  * Gorilla WebSocket for real-time data ✅
+  * Gopsutil for system metrics ✅
+  * SQLite for development database ✅
+  * Bcrypt for password hashing ✅
+
+- Frontend:
+  * NextJS 13+ with App Router ✅
+  * TypeScript for type safety ✅
+  * Shadcn/UI component library ✅
+  * Tailwind CSS for styling ✅
+  * Axios for API communication ✅
+  * Recharts for data visualization ✅
+  * React Dropzone for file uploads ✅
+  * Lucide React for icons ✅
+
+## Development Environment ✅ CONFIGURED
+- Git for version control ✅
+- Shell scripts for service management ✅
+- Environment configuration ✅
+- Logging and monitoring ✅
+- Development and production builds ✅
+
+# Future Enhancements (Not Yet Implemented)
+
+## CMD Command Management System ⏳ PLANNED
+- Shell Command execution interface
+- Shell Command history tracking
+- Shell Command logging and audit
+- Command output streaming
+- Security validation for commands
+
+**Note**: This feature was mentioned in the original PRD but has not been implemented yet. It would require:
+- Backend: Command execution service with security validation
+- Frontend: Terminal-like interface component
+- Security: Command whitelist and user permission checks
+- Real-time: WebSocket for live command output streaming
+</PRD>
