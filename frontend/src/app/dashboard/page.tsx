@@ -7,6 +7,7 @@ import { LayoutWrapper } from '@/components/layout/LayoutWrapper';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { 
   LogOut, 
   User, 
@@ -225,11 +226,15 @@ export default function DashboardPage() {
                 <CardContent className="relative">
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-                        <span className="text-white font-semibold text-lg">
+                      <Avatar className="w-12 h-12 shadow-lg">
+                        <AvatarImage 
+                          src={user.avatar ? `http://localhost:8080${user.avatar}` : undefined} 
+                          alt={`${user.username}'s avatar`}
+                        />
+                        <AvatarFallback className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-lg">
                           {user.username.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
+                        </AvatarFallback>
+                      </Avatar>
                       <div>
                         <p className="font-medium text-gray-900">{user.username}</p>
                         <p className="text-sm text-gray-500 capitalize">{user.role}</p>
@@ -344,7 +349,18 @@ export default function DashboardPage() {
                       <div className="max-h-32 overflow-y-auto space-y-1">
                         {users.slice(0, 5).map((u) => (
                           <div key={u.id} className="flex items-center justify-between text-xs py-1 px-2 rounded hover:bg-gray-50">
-                            <span className="text-gray-700">{u.username}</span>
+                            <div className="flex items-center space-x-2">
+                              <Avatar className="w-6 h-6">
+                                <AvatarImage 
+                                  src={u.avatar ? `http://localhost:8080${u.avatar}` : undefined} 
+                                  alt={`${u.username}'s avatar`}
+                                />
+                                <AvatarFallback className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                                  {u.username.charAt(0).toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              <span className="text-gray-700">{u.username}</span>
+                            </div>
                             <span className="text-gray-500 capitalize">{u.role}</span>
                           </div>
                         ))}

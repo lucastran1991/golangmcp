@@ -8,12 +8,14 @@ import {
   LayoutDashboard, 
   BarChart3, 
   FolderOpen, 
+  Terminal,
   Menu, 
   X,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface SidebarProps {
@@ -49,6 +51,12 @@ const navigationItems: NavigationItem[] = [
     href: '/files',
     icon: FolderOpen,
     description: 'File upload and management'
+  },
+  {
+    name: 'Commands',
+    href: '/commands',
+    icon: Terminal,
+    description: 'Shell command execution'
   }
 ];
 
@@ -132,14 +140,15 @@ export function Sidebar({
         {!isCollapsed && user && (
           <div className="p-4 border-b border-white/20">
             <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full blur-sm opacity-30"></div>
-                <div className="relative w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-semibold text-sm">
-                    {user.username.charAt(0).toUpperCase()}
-                  </span>
-                </div>
-              </div>
+              <Avatar className="w-10 h-10 shadow-lg">
+                <AvatarImage 
+                  src={user.avatar ? `http://localhost:8080${user.avatar}` : undefined} 
+                  alt={`${user.username}'s avatar`}
+                />
+                <AvatarFallback className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-sm">
+                  {user.username.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">
                   {user.username}

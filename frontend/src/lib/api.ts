@@ -86,9 +86,30 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: (data: RegisterRequest) => api.post('/register', data),
-  login: (data: LoginRequest) => api.post('/login', data),
-  logout: () => api.post('/logout'),
+  register: async (data: RegisterRequest) => {
+    const token = await getCSRFToken();
+    return api.post('/register', data, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  login: async (data: LoginRequest) => {
+    const token = await getCSRFToken();
+    return api.post('/login', data, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  logout: async () => {
+    const token = await getCSRFToken();
+    return api.post('/logout', {}, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
 };
 
 // Profile API
@@ -143,6 +164,101 @@ export const profileAPI = {
 export const usersAPI = {
   getUsers: () => api.get('/users'),
 };
+
+// Command API
+export const commandAPI = {
+  executeCommand: async (data: ExecuteCommandRequest) => {
+    const token = await getCSRFToken();
+    return api.post('/commands/execute', data, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  getCommandHistory: (page = 1, limit = 20) => api.get(`/commands?page=${page}&limit=${limit}`),
+  getCommand: (id: string) => api.get(`/commands/${id}`),
+  getCommandStats: () => api.get('/commands/stats'),
+  getWhitelist: () => api.get('/commands/whitelist'),
+  addToWhitelist: async (data: AddToWhitelistRequest) => {
+    const token = await getCSRFToken();
+    return api.post('/commands/whitelist', data, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  removeFromWhitelist: async (command: string) => {
+    const token = await getCSRFToken();
+    return api.delete(`/commands/whitelist/${encodeURIComponent(command)}`, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+  initializeWhitelist: async () => {
+    const token = await getCSRFToken();
+    return api.post('/commands/whitelist/initialize', {}, {
+      headers: {
+        'X-CSRF-Token': token || '',
+      },
+    });
+  },
+};
+
+// Command Types
+export interface ExecuteCommandRequest {
+  command: string;
+  args?: string[];
+  working_dir?: string;
+}
+
+export interface Command {
+  id: number;
+  command: string;
+  args: string;
+  output: string;
+  exit_code: number;
+  user_id: number;
+  user: User;
+  working_dir: string;
+  environment: string;
+  duration: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CommandStats {
+  total_commands: number;
+  successful_commands: number;
+  failed_commands: number;
+  average_duration: number;
+  most_used_commands: Array<{
+    command: string;
+    count: number;
+  }>;
+  recent_activity: Array<{
+    date: string;
+    count: number;
+  }>;
+}
+
+export interface CommandWhitelist {
+  id: number;
+  command: string;
+  description: string;
+  allowed_args: string;
+  max_duration: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AddToWhitelistRequest {
+  command: string;
+  description: string;
+  allowed_args?: string[];
+  max_duration?: number;
+}
 
 // Security API
 export const securityAPI = {

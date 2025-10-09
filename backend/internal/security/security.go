@@ -237,6 +237,14 @@ func (csrf *CSRFProtection) GenerateToken(clientIP string) string {
 	
 	token := generateRandomToken()
 	csrf.tokens[clientIP] = token
+	
+	// For localhost development, also store for other localhost variations
+	if clientIP == "127.0.0.1" || clientIP == "::1" || clientIP == "localhost" {
+		csrf.tokens["127.0.0.1"] = token
+		csrf.tokens["::1"] = token
+		csrf.tokens["localhost"] = token
+	}
+	
 	return token
 }
 
@@ -244,6 +252,18 @@ func (csrf *CSRFProtection) GenerateToken(clientIP string) string {
 func (csrf *CSRFProtection) ValidateToken(clientIP, token string) bool {
 	csrf.mutex.RLock()
 	defer csrf.mutex.RUnlock()
+	
+	// For localhost development, be more flexible with IP matching
+	if clientIP == "127.0.0.1" || clientIP == "::1" || clientIP == "localhost" {
+		// Check all localhost variations
+		for ip := range csrf.tokens {
+			if ip == "127.0.0.1" || ip == "::1" || ip == "localhost" {
+				if csrf.tokens[ip] == token {
+					return true
+				}
+			}
+		}
+	}
 	
 	storedToken, exists := csrf.tokens[clientIP]
 	return exists && storedToken == token
