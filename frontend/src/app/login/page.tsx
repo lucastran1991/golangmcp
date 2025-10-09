@@ -9,6 +9,7 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { MaterialButton } from '@/components/ui/material-button';
 import { Input } from '@/components/ui/input';
+import { MaterialInput } from '@/components/ui/material-input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -136,63 +137,44 @@ export default function LoginPage() {
                 </Alert>
               )}
 
-              <div className="space-y-3">
-                <Label htmlFor="username" className="text-sm font-medium text-gray-700 flex items-center">
-                  <Zap className="h-4 w-4 mr-2 text-blue-500" />
-                  Username
-                </Label>
-                <div className="relative group">
-                  <Input
-                    id="username"
-                    type="text"
-                    {...register('username')}
-                    placeholder="Enter your username"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:shadow-lg"
-                  />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-                {errors.username && (
-                  <p className="text-sm text-red-600 flex items-center">
-                    <Heart className="h-3 w-3 mr-1" />
-                    {errors.username.message}
-                  </p>
-                )}
-              </div>
+              <MaterialInput
+                label="Username"
+                type="text"
+                {...register('username')}
+                placeholder="Enter your username"
+                error={errors.username?.message}
+                required
+                size="large"
+                variant="primary"
+                icon={<Zap className="h-4 w-4" />}
+              />
 
-              <div className="space-y-3">
-                <Label htmlFor="password" className="text-sm font-medium text-gray-700 flex items-center">
-                  <Shield className="h-4 w-4 mr-2 text-green-500" />
-                  Password
-                </Label>
-                <div className="relative group">
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    {...register('password')}
-                    placeholder="Enter your password"
-                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 group-hover:shadow-lg"
-                  />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-transparent text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-                {errors.password && (
-                  <p className="text-sm text-red-600 flex items-center">
-                    <Heart className="h-3 w-3 mr-1" />
-                    {errors.password.message}
-                  </p>
-                )}
+              <div className="relative">
+                <MaterialInput
+                  label="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password')}
+                  placeholder="Enter your password"
+                  error={errors.password?.message}
+                  required
+                  size="large"
+                  variant="success"
+                  icon={<Shield className="h-4 w-4" />}
+                  password
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-transparent text-gray-400 hover:text-gray-600 transition-colors duration-200 z-10"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
               </div>
 
               <MaterialButton 

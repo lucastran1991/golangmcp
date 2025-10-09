@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { MaterialButton } from '@/components/ui/material-button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { MaterialInput } from '@/components/ui/material-input';
+import { MaterialTextarea } from '@/components/ui/material-textarea';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, User, Mail, Calendar, MapPin, Phone, ArrowLeft } from 'lucide-react';
@@ -191,103 +193,83 @@ export default function EditProfilePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="first_name">First Name</Label>
-                  <Input
-                    id="first_name"
-                    name="first_name"
-                    type="text"
-                    value={formData.first_name}
-                    onChange={handleInputChange}
-                    className="w-full"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="last_name">Last Name</Label>
-                  <Input
-                    id="last_name"
-                    name="last_name"
-                    type="text"
-                    value={formData.last_name}
-                    onChange={handleInputChange}
-                    className="w-full"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <textarea
-                  id="bio"
-                  name="bio"
-                  value={formData.bio}
+                <MaterialInput
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
                   onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Tell us about yourself..."
+                  required
+                  variant="primary"
+                  icon={<Mail className="h-4 w-4" />}
+                />
+
+                <MaterialInput
+                  label="First Name"
+                  name="first_name"
+                  type="text"
+                  value={formData.first_name}
+                  onChange={handleInputChange}
+                  variant="info"
+                  icon={<User className="h-4 w-4" />}
+                />
+
+                <MaterialInput
+                  label="Last Name"
+                  name="last_name"
+                  type="text"
+                  value={formData.last_name}
+                  onChange={handleInputChange}
+                  variant="info"
+                  icon={<User className="h-4 w-4" />}
                 />
               </div>
+
+              <MaterialTextarea
+                label="Bio"
+                name="bio"
+                value={formData.bio}
+                onChange={handleInputChange}
+                rows={3}
+                placeholder="Tell us about yourself..."
+                variant="success"
+                helper="Share a bit about yourself with other users"
+              />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="location">Location</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="location"
-                      name="location"
-                      type="text"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                      className="w-full pl-10"
-                      placeholder="City, Country"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full pl-10"
-                      placeholder="+1 (555) 123-4567"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="website">Website</Label>
-                <Input
-                  id="website"
-                  name="website"
-                  type="url"
-                  value={formData.website}
+                <MaterialInput
+                  label="Location"
+                  name="location"
+                  type="text"
+                  value={formData.location}
                   onChange={handleInputChange}
-                  className="w-full"
-                  placeholder="https://yourwebsite.com"
+                  placeholder="City, Country"
+                  variant="warning"
+                  icon={<MapPin className="h-4 w-4" />}
+                />
+
+                <MaterialInput
+                  label="Phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="+1 (555) 123-4567"
+                  variant="error"
+                  icon={<Phone className="h-4 w-4" />}
                 />
               </div>
+
+              <MaterialInput
+                label="Website"
+                name="website"
+                type="url"
+                value={formData.website}
+                onChange={handleInputChange}
+                placeholder="https://yourwebsite.com"
+                variant="info"
+                helper="Optional: Your personal website or portfolio"
+              />
 
               <div className="flex items-center justify-between pt-6 border-t border-white/30">
                 <MaterialButton
