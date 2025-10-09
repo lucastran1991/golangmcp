@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -162,15 +163,14 @@ export default function ChangePasswordPage() {
       <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-6">
-            <Button
-              variant="outline"
-              size="sm"
+            <MaterialButton
+              variant="outlined"
+              size="small"
               onClick={() => router.push('/dashboard')}
-              className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Dashboard</span>
-            </Button>
+            </MaterialButton>
           </div>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
@@ -340,29 +340,23 @@ export default function ChangePasswordPage() {
               </div>
 
               <div className="flex items-center justify-between pt-6 border-t border-white/30">
-                <Button
+                <MaterialButton
                   type="button"
-                  variant="outline"
+                  variant="outlined"
                   onClick={handleCancel}
                   disabled={loading}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300 transition-all duration-200"
                 >
                   Cancel
-                </Button>
-                <Button
+                </MaterialButton>
+                <MaterialButton
                   type="submit"
                   disabled={loading || passwordStrength.score < 3 || formData.new_password !== formData.confirm_password}
-                  className="min-w-[160px] bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+                  loading={loading}
+                  variant="primary"
+                  className="min-w-[160px]"
                 >
-                  {loading ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Changing...
-                    </>
-                  ) : (
-                    'Change Password'
-                  )}
-                </Button>
+                  Change Password
+                </MaterialButton>
               </div>
             </form>
           </CardContent>

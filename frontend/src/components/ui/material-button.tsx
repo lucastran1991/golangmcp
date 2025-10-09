@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outlined' | 'text' | 'success' | 'warning' | 'error';
+  variant?: 'primary' | 'secondary' | 'outlined' | 'text' | 'success' | 'warning' | 'error' | 'info';
   size?: 'small' | 'medium' | 'large';
   icon?: boolean;
   fab?: boolean;
@@ -31,6 +31,7 @@ export function MaterialButton({
     success: 'btn-material--success',
     warning: 'btn-material--warning',
     error: 'btn-material--error',
+    info: 'btn-material--info',
   };
   
   const sizeClasses = {

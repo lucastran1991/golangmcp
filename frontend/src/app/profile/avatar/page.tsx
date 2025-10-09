@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
@@ -171,15 +172,15 @@ export default function AvatarUploadPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center mb-4">
-            <Button
-              variant="ghost"
-              size="sm"
+            <MaterialButton
+              variant="text"
+              size="small"
               onClick={() => router.back()}
-              className="mr-4 hover:bg-white/50 transition-all duration-200"
+              className="mr-4"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
-            </Button>
+            </MaterialButton>
             <div className="flex items-center">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-3 shadow-lg">
                 <ImageIcon className="h-6 w-6 text-white" />
@@ -212,16 +213,16 @@ export default function AvatarUploadPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Current profile picture</p>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
+                  <MaterialButton 
+                    variant="error"
+                    size="small"
                     onClick={handleDeleteAvatar}
                     disabled={loading}
-                    className="mt-2 border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 shadow-sm hover:shadow-md transition-all duration-200"
+                    className="mt-2"
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
                     Remove Current
-                  </Button>
+                  </MaterialButton>
                 </div>
               </div>
             </CardContent>
@@ -291,32 +292,23 @@ export default function AvatarUploadPage() {
                     </p>
                   </div>
                   <div className="flex justify-center space-x-2">
-                    <Button
+                    <MaterialButton
                       onClick={handleUpload}
                       disabled={loading}
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
+                      loading={loading}
+                      variant="primary"
                     >
-                      {loading ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                          Uploading...
-                        </>
-                      ) : (
-                        <>
-                          <Upload className="h-4 w-4 mr-2" />
-                          Upload Avatar
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="outline"
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload Avatar
+                    </MaterialButton>
+                    <MaterialButton
+                      variant="outlined"
                       onClick={clearSelection}
                       disabled={loading}
-                      className="border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 shadow-sm hover:shadow-md transition-all duration-200"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancel
-                    </Button>
+                    </MaterialButton>
                   </div>
                 </div>
               ) : (
@@ -332,15 +324,14 @@ export default function AvatarUploadPage() {
                       or click to browse files
                     </p>
                   </div>
-                  <Button
+                  <MaterialButton
                     onClick={openFileDialog}
-                    variant="outline"
+                    variant="outlined"
                     disabled={loading}
-                    className="border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     <Upload className="h-4 w-4 mr-2" />
                     Choose File
-                  </Button>
+                  </MaterialButton>
                 </div>
               )}
             </div>

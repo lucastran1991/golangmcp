@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { MaterialButton } from '@/components/ui/material-button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -198,15 +199,14 @@ export default function AccountSettingsPage() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-6">
-            <Button
-              variant="outline"
-              size="sm"
+            <MaterialButton
+              variant="outlined"
+              size="small"
               onClick={() => router.push('/dashboard')}
-              className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm border-white/20 hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Dashboard</span>
-            </Button>
+            </MaterialButton>
           </div>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
@@ -234,30 +234,30 @@ export default function AccountSettingsPage() {
         <Card className="mb-8 bg-white/80 backdrop-blur-sm border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
           <CardContent className="pt-6">
             <div className="flex flex-wrap gap-3">
-              <Button
-                variant="outline"
+              <MaterialButton
                 onClick={() => router.push('/profile/edit')}
-                className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                variant="primary"
+                className="flex items-center space-x-2"
               >
                 <Settings className="h-4 w-4" />
                 <span>Edit Profile</span>
-              </Button>
-              <Button
-                variant="outline"
+              </MaterialButton>
+              <MaterialButton
                 onClick={() => router.push('/profile/change-password')}
-                className="flex items-center space-x-2 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                variant="secondary"
+                className="flex items-center space-x-2"
               >
                 <Shield className="h-4 w-4" />
                 <span>Change Password</span>
-              </Button>
-              <Button
-                variant="outline"
+              </MaterialButton>
+              <MaterialButton
                 onClick={() => router.push('/profile/avatar')}
-                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                variant="info"
+                className="flex items-center space-x-2"
               >
                 <Globe className="h-4 w-4" />
                 <span>Upload Avatar</span>
-              </Button>
+              </MaterialButton>
             </div>
           </CardContent>
         </Card>
@@ -398,14 +398,13 @@ export default function AccountSettingsPage() {
                       </p>
                     </div>
                     {session.is_active && (
-                      <Button
-                        variant="outline"
-                        size="sm"
+                      <MaterialButton
+                        variant="error"
+                        size="small"
                         onClick={() => handleInvalidateSession(session.id)}
-                        className="bg-red-50 hover:bg-red-100 text-red-700 border-red-200 hover:border-red-300 transition-all duration-200"
                       >
                         Revoke
-                      </Button>
+                      </MaterialButton>
                     )}
                   </div>
                 )) : (
@@ -416,13 +415,13 @@ export default function AccountSettingsPage() {
                 
                 {sessions && sessions.length > 1 && (
                   <div className="pt-4 border-t border-white/30">
-                    <Button
-                      variant="outline"
+                    <MaterialButton
                       onClick={handleInvalidateAllSessions}
-                      className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
+                      variant="warning"
+                      className="w-full"
                     >
                       Revoke All Other Sessions
-                    </Button>
+                    </MaterialButton>
                   </div>
                 )}
               </div>
@@ -447,14 +446,13 @@ export default function AccountSettingsPage() {
                     Sign out of your account on this device
                   </p>
                 </div>
-                <Button
-                  variant="outline"
+                <MaterialButton
                   onClick={handleLogout}
-                  className="border-red-300 text-red-700 hover:bg-red-100 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
+                  variant="error"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout
-                </Button>
+                </MaterialButton>
               </div>
 
               <div className="flex items-center justify-between p-4 border border-red-200 rounded-xl bg-white/60 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
@@ -464,14 +462,13 @@ export default function AccountSettingsPage() {
                     Permanently delete your account and all associated data
                   </p>
                 </div>
-                <Button
-                  variant="outline"
+                <MaterialButton
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="border-red-300 text-red-700 hover:bg-red-100 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
+                  variant="error"
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
                   Delete Account
-                </Button>
+                </MaterialButton>
               </div>
             </CardContent>
           </Card>
@@ -479,20 +476,15 @@ export default function AccountSettingsPage() {
 
         {/* Save Settings Button */}
         <div className="mt-8 flex justify-center">
-          <Button
+          <MaterialButton
             onClick={handleSaveSettings}
             disabled={loading}
-            className="min-w-[160px] bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105"
+            loading={loading}
+            variant="primary"
+            className="min-w-[160px]"
           >
-            {loading ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Saving...
-              </>
-            ) : (
-              'Save Settings'
-            )}
-          </Button>
+            Save Settings
+          </MaterialButton>
         </div>
 
         {/* Delete Account Confirmation Modal */}
@@ -525,31 +517,25 @@ export default function AccountSettingsPage() {
                   />
                 </div>
                 <div className="flex space-x-3">
-                  <Button
-                    variant="outline"
+                  <MaterialButton
+                    variant="outlined"
                     onClick={() => {
                       setShowDeleteConfirm(false);
                       setDeleteConfirmText('');
                     }}
-                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300 transition-all duration-200"
+                    className="flex-1"
                   >
                     Cancel
-                  </Button>
-                  <Button
-                    variant="destructive"
+                  </MaterialButton>
+                  <MaterialButton
                     onClick={handleDeleteAccount}
                     disabled={deleteConfirmText !== 'DELETE' || loading}
-                    className="flex-1 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
+                    loading={loading}
+                    variant="error"
+                    className="flex-1"
                   >
-                    {loading ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        Deleting...
-                      </>
-                    ) : (
-                      'Delete Account'
-                    )}
-                  </Button>
+                    Delete Account
+                  </MaterialButton>
                 </div>
               </CardContent>
             </Card>
