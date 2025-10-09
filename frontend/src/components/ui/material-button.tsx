@@ -7,6 +7,7 @@ interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   icon?: boolean;
   fab?: boolean;
   loading?: boolean;
+  quickAction?: boolean;
   children: React.ReactNode;
 }
 
@@ -16,6 +17,7 @@ export function MaterialButton({
   icon = false,
   fab = false,
   loading = false,
+  quickAction = false,
   className,
   children,
   disabled,
@@ -44,6 +46,7 @@ export function MaterialButton({
     icon && 'btn-material--icon',
     fab && 'btn-material--fab',
     loading && 'btn-material--loading',
+    quickAction && 'btn-material--quick-action',
   ].filter(Boolean);
   
   return (

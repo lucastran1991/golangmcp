@@ -347,6 +347,30 @@
   100% { transform: rotate(360deg); }
 }
 
+/* Quick Actions Variant - Maintains original corner radius */
+.btn-material--quick-action {
+  border-radius: 8px;
+  height: 80px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  min-height: 80px;
+}
+
+.btn-material--quick-action:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-material--quick-action:active {
+  transform: translateY(0) scale(0.98);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .btn-material {

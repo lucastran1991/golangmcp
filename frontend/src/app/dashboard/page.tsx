@@ -141,59 +141,59 @@ export default function DashboardPage() {
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <Button
+                <MaterialButton
                   onClick={() => router.push('/profile/edit')}
-                  className="group/btn h-20 flex flex-col items-center justify-center space-y-2 border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                  variant="primary"
+                  quickAction
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                  <User className="h-6 w-6 relative" />
-                  <span className="text-xs font-medium relative">Edit Profile</span>
-                </Button>
+                  <User className="h-6 w-6" />
+                  <span className="text-xs font-medium">Edit Profile</span>
+                </MaterialButton>
 
-                <Button
+                <MaterialButton
                   onClick={() => router.push('/profile/change-password')}
-                  className="group/btn h-20 flex flex-col items-center justify-center space-y-2 border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                  variant="success"
+                  quickAction
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                  <Key className="h-6 w-6 relative" />
-                  <span className="text-xs font-medium relative">Change Password</span>
-                </Button>
+                  <Key className="h-6 w-6" />
+                  <span className="text-xs font-medium">Change Password</span>
+                </MaterialButton>
 
-                <Button
+                <MaterialButton
                   onClick={() => router.push('/profile/avatar')}
-                  className="group/btn h-20 flex flex-col items-center justify-center space-y-2 border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                  variant="secondary"
+                  quickAction
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                  <Camera className="h-6 w-6 relative" />
-                  <span className="text-xs font-medium relative">Upload Avatar</span>
-                </Button>
+                  <Camera className="h-6 w-6" />
+                  <span className="text-xs font-medium">Upload Avatar</span>
+                </MaterialButton>
 
-                <Button
+                <MaterialButton
                   onClick={() => router.push('/profile/settings')}
-                  className="group/btn h-20 flex flex-col items-center justify-center space-y-2 border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                  variant="warning"
+                  quickAction
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                  <Settings className="h-6 w-6 relative" />
-                  <span className="text-xs font-medium relative">Account Settings</span>
-                </Button>
+                  <Settings className="h-6 w-6" />
+                  <span className="text-xs font-medium">Account Settings</span>
+                </MaterialButton>
 
-                <Button
+                <MaterialButton
                   onClick={() => router.push('/deployment')}
-                  className="group/btn h-20 flex flex-col items-center justify-center space-y-2 border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                  variant="info"
+                  quickAction
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                  <BarChart3 className="h-6 w-6 relative" />
-                  <span className="text-xs font-medium relative">System Metrics</span>
-                </Button>
+                  <BarChart3 className="h-6 w-6" />
+                  <span className="text-xs font-medium">System Metrics</span>
+                </MaterialButton>
 
-                <Button
+                <MaterialButton
                   onClick={() => router.push('/files')}
-                  className="group/btn h-20 flex flex-col items-center justify-center space-y-2 border-teal-200 text-teal-600 hover:bg-teal-50 hover:border-teal-300 shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden"
+                  variant="success"
+                  quickAction
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-500 opacity-0 group-hover/btn:opacity-10 transition-opacity duration-200"></div>
-                  <FolderOpen className="h-6 w-6 relative" />
-                  <span className="text-xs font-medium relative">File Manager</span>
-                </Button>
+                  <FolderOpen className="h-6 w-6" />
+                  <span className="text-xs font-medium">File Manager</span>
+                </MaterialButton>
               </div>
             </div>
 
