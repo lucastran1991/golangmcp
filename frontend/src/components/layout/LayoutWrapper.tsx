@@ -46,7 +46,7 @@ export function LayoutWrapper({ children }: LayoutWrapperProps) {
               <Menu className="h-5 w-5" />
             </Button>
             <h1 className="text-lg font-semibold text-gray-900">
-              Golang MCP
+              Demo
             </h1>
             <div className="w-9" /> {/* Spacer for centering */}
           </div>

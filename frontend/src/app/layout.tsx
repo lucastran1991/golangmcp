@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Golang MCP - User Management",
+  title: "Demo - User Management",
   description: "Full-stack user authentication and profile management system",
 };
 

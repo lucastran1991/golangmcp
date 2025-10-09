@@ -102,7 +102,7 @@ export function Sidebar({
               </div>
               <div>
                 <h2 className="text-lg font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  Golang MCP
+                  Demo
                 </h2>
                 <p className="text-xs text-gray-600">User Management</p>
               </div>
@@ -227,7 +227,7 @@ export function Sidebar({
         {!isCollapsed && (
           <div className="p-4 border-t border-white/20">
             <div className="text-xs text-gray-500 text-center">
-              <p>Golang MCP v1.0.0</p>
+              <p>Demo v1.0.0</p>
               <p className="mt-1">Full-stack User Management</p>
             </div>
           </div>
